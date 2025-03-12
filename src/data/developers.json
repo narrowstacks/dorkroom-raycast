@@ -1,0 +1,97 @@
+{
+  "developers": [
+    {
+      "name": "HC-110",
+      "brand": "Kodak",
+      "type": "B&W Film",
+      "commonDilutions": [
+        {
+          "name": "Dilution A",
+          "ratio": "1:15",
+          "description": "Most concentrated dilution"
+        },
+        {
+          "name": "Dilution B",
+          "ratio": "1:31",
+          "description": "Common dilution for standard development"
+        },
+        {
+          "name": "Dilution C",
+          "ratio": "1:19",
+          "description": "Intermediate dilution"
+        },
+        {
+          "name": "Dilution D",
+          "ratio": "1:39",
+          "description": "More dilute option"
+        },
+        {
+          "name": "Dilution E",
+          "ratio": "1:47",
+          "description": "More economical dilution"
+        },
+        {
+          "name": "Dilution F",
+          "ratio": "1:79",
+          "description": "Most dilute option"
+        },
+        {
+          "name": "Dilution H",
+          "ratio": "1:63",
+          "description": "Very economical, much longer development times"
+        }
+      ]
+    },
+    {
+      "name": "D-76",
+      "brand": "Kodak",
+      "type": "B&W Film",
+      "commonDilutions": [
+        {
+          "name": "1:1",
+          "ratio": "1:1",
+          "description": "Common dilution, better shadow detail"
+        },
+        {
+          "name": "1:3",
+          "ratio": "1:3",
+          "description": "More economical, slightly less sharpness"
+        }
+      ]
+    },
+    {
+      "name": "DD-X",
+      "brand": "Ilford",
+      "type": "B&W Film",
+      "commonDilutions": [
+        {
+          "name": "Standard",
+          "ratio": "1:4",
+          "description": "Standard dilution for all films"
+        }
+      ]
+    },
+    {
+      "name": "Rodinal",
+      "brand": "Agfa",
+      "type": "B&W Film",
+      "commonDilutions": [
+        {
+          "name": "Standard",
+          "ratio": "1+25",
+          "description": "Normal development"
+        },
+        {
+          "name": "Economy",
+          "ratio": "1+50",
+          "description": "Common dilution, longer development"
+        },
+        {
+          "name": "Stand",
+          "ratio": "1+100",
+          "description": "For stand development"
+        }
+      ]
+    }
+  ]
+}

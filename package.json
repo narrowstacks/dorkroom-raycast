@@ -1,0 +1,88 @@
+{
+  "$schema": "https://www.raycast.com/schemas/extension.json",
+  "name": "film-tools",
+  "title": "Film Tools",
+  "description": "Quick access to film information, developing times, dilutions, and more!",
+  "icon": "extension-icon.png",
+  "author": "narrowstacks",
+  "categories": [
+    "Fun"
+  ],
+  "license": "MIT",
+  "commands": [
+    {
+      "name": "film-search",
+      "title": "Film Search",
+      "subtitle": "Search for film types",
+      "description": "Find and view types of films from various brands.",
+      "mode": "view",
+      "icon": "film-icon.png"
+    },
+    {
+      "name": "dilution-calculator",
+      "title": "Dilution Calculator",
+      "subtitle": "Calculate a chemical mixture dilution",
+      "description": "Calculate a chemical mixture dilution in ml or fl oz",
+      "mode": "view",
+      "icon": "dilution-icon.png",
+      "preferences": [
+        {
+          "name": "volumeUnit",
+          "title": "Volume Unit",
+          "description": "Choose the unit of measurement for volumes",
+          "type": "dropdown",
+          "required": true,
+          "default": "ml",
+          "data": [
+            {
+              "title": "Milliliters (ml)",
+              "value": "ml"
+            },
+            {
+              "title": "Fluid Ounces (fl oz)",
+              "value": "floz"
+            }
+          ]
+        },
+        {
+          "name": "defaultNotation",
+          "title": "Default Notation",
+          "description": "Choose the default notation type for simple ratios (e.g., '31 500' becomes either '1+31' or '1:31')",
+          "type": "dropdown",
+          "required": true,
+          "default": "plus",
+          "data": [
+            {
+              "title": "Plus (+)",
+              "value": "plus"
+            },
+            {
+              "title": "Colon (:)",
+              "value": "colon"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "dependencies": {
+    "@raycast/api": "^1.93.2",
+    "@raycast/utils": "^1.17.0"
+  },
+  "devDependencies": {
+    "@raycast/eslint-config": "^1.0.11",
+    "@types/node": "20.8.10",
+    "@types/react": "18.3.3",
+    "eslint": "^8.57.0",
+    "prettier": "^3.3.3",
+    "typescript": "^5.4.5"
+  },
+  "scripts": {
+    "build": "ray build",
+    "dev": "ray develop",
+    "fix-lint": "ray lint --fix",
+    "lint": "ray lint",
+    "prepublishOnly": "echo \"\\n\\nIt seems like you are trying to publish the Raycast extension to npm.\\n\\nIf you did intend to publish it to npm, remove the \\`prepublishOnly\\` script and rerun \\`npm publish\\` again.\\nIf you wanted to publish it to the Raycast Store instead, use \\`npm run publish\\` instead.\\n\\n\" && exit 1",
+    "publish": "npx @raycast/api@latest publish"
+  }
+}
