@@ -2,6 +2,7 @@ import { List, ActionPanel, Action, Icon, useNavigation, Detail } from "@raycast
 import { useEffect } from "react";
 import { DilutionForm, VolumeInputForm, NameForm, EditForm } from "./DilutionForm";
 import { DilutionDetail } from "./DilutionDetail";
+import { CalculatorDisplay } from "./CalculatorDisplay";
 import { useDilutionCalculator } from "../hooks/useDilutionCalculator";
 import { formatDilutionResult } from "../utils/dilution";
 
@@ -71,6 +72,7 @@ export function DilutionCalculator() {
       searchBarPlaceholder="Search developers or enter ratio (e.g., 'HC-110', 'Dilution B', '1+31', '31 500')"
       onSearchTextChange={setSearchText}
       searchText={searchText}
+      selectedItemId={savedRatios.length > 0 ? savedRatios[0].id : undefined}
       actions={
         <ActionPanel>
           <Action
@@ -110,8 +112,9 @@ export function DilutionCalculator() {
                     title={`Use ${dilution.name} (${dilution.ratio})`}
                     icon={Icon.ArrowRight}
                     onAction={() => {
-                      setSearchText(dilution.ratio.replace(":", "+"));
-                      setPendingRatio(dilution.ratio.replace(":", "+"));
+                      const volumeMatch = searchText.match(/\d+(?:\.\d+)?/);
+                      const volume = volumeMatch ? volumeMatch[0] : "";
+                      setSearchText(`${dilution.ratio.replace(":", "+")}${volume ? ` ${volume}` : " "}`);
                     }}
                   />
                   <Action.Push
@@ -140,8 +143,9 @@ ${dil.description}`,
                                 icon={Icon.ArrowRight}
                                 onAction={() => {
                                   pop();
-                                  setSearchText(dil.ratio.replace(":", "+"));
-                                  setPendingRatio(dil.ratio.replace(":", "+"));
+                                  const volumeMatch = searchText.match(/\d+(?:\.\d+)?/);
+                                  const volume = volumeMatch ? volumeMatch[0] : "";
+                                  setSearchText(`${dil.ratio.replace(":", "+")}${volume ? ` ${volume}` : " "}`);
                                 }}
                               />
                             ))}
@@ -159,54 +163,40 @@ ${dil.description}`,
 
       {currentCalculation && (
         <List.Section title="Current Calculation">
-          <List.Item
-            title={`${currentCalculation.ratio} - ${currentCalculation.amount}${volumeUnit}`}
-            subtitle={formatDilutionResult(currentCalculation, volumeUnit)}
-            actions={
-              <ActionPanel>
-                <Action
-                  title="Save With Name"
-                  icon={Icon.SaveDocument}
-                  onAction={() => {
-                    const result = calculateDilution(currentCalculation.ratio, currentCalculation.amount);
-                    if (result) {
-                      push(
-                        <NameForm
-                          ratio={currentCalculation.ratio}
-                          amount={currentCalculation.amount}
-                          volumeUnit={volumeUnit}
-                          onSubmit={(name) => {
-                            saveCurrentRatio(currentCalculation.ratio, currentCalculation.amount, name);
-                            pop();
-                          }}
-                        />,
-                      );
-                    }
+          <CalculatorDisplay
+            input={`${currentCalculation.ratio}`}
+            result={currentCalculation}
+            onSave={() => {
+              push(
+                <NameForm
+                  ratio={currentCalculation.ratio}
+                  amount={currentCalculation.amount}
+                  volumeUnit={volumeUnit}
+                  onSubmit={(name) => {
+                    saveCurrentRatio(currentCalculation.ratio, currentCalculation.amount, name);
+                    pop();
                   }}
-                />
-                <Action
-                  title="Quick Save"
-                  icon={Icon.SaveDocument}
-                  onAction={() => {
-                    saveCurrentRatio(currentCalculation.ratio, currentCalculation.amount);
-                  }}
-                />
-                <Action.CopyToClipboard
-                  title="Copy Results"
-                  content={formatDilutionResult(currentCalculation, volumeUnit)}
-                />
-              </ActionPanel>
-            }
+                />,
+              );
+            }}
+            onQuickSave={() => {
+              saveCurrentRatio(currentCalculation.ratio, currentCalculation.amount);
+            }}
+            onCopy={() => {}}
           />
         </List.Section>
       )}
 
-      <List.Section title="Saved Ratios" subtitle={savedRatios.length > 0 ? `${savedRatios.length} saved` : undefined}>
+      <List.Section
+        title="Saved Calculations"
+        subtitle={savedRatios.length > 0 ? `${savedRatios.length} saved` : undefined}
+      >
         {savedRatios.map((ratio) => {
           const result = calculateDilution(ratio.ratio, ratio.amount);
           return (
             <List.Item
               key={ratio.id}
+              id={ratio.id}
               title={ratio.name || ratio.ratio}
               icon={ratio.icon}
               subtitle={
@@ -221,10 +211,7 @@ ${dil.description}`,
                     title="Calculate"
                     icon={Icon.Calculator}
                     onAction={() => {
-                      const result = calculateDilution(ratio.ratio, ratio.amount);
-                      if (result) {
-                        push(<DilutionDetail result={result} volumeUnit={volumeUnit} />);
-                      }
+                      setSearchText(`${ratio.ratio} ${ratio.amount}`);
                     }}
                   />
                   <Action
@@ -270,8 +257,9 @@ ${dil.description}`,
                     title={`Use ${dilution.name} (${dilution.ratio})`}
                     icon={Icon.ArrowRight}
                     onAction={() => {
-                      setSearchText(dilution.ratio.replace(":", "+"));
-                      setPendingRatio(dilution.ratio.replace(":", "+"));
+                      const volumeMatch = searchText.match(/\d+(?:\.\d+)?/);
+                      const volume = volumeMatch ? volumeMatch[0] : "";
+                      setSearchText(`${dilution.ratio.replace(":", "+")}${volume ? ` ${volume}` : " "}`);
                     }}
                   />
                   <Action.Push
@@ -300,8 +288,9 @@ ${dil.description}`,
                                 icon={Icon.ArrowRight}
                                 onAction={() => {
                                   pop();
-                                  setSearchText(dil.ratio.replace(":", "+"));
-                                  setPendingRatio(dil.ratio.replace(":", "+"));
+                                  const volumeMatch = searchText.match(/\d+(?:\.\d+)?/);
+                                  const volume = volumeMatch ? volumeMatch[0] : "";
+                                  setSearchText(`${dil.ratio.replace(":", "+")}${volume ? ` ${volume}` : " "}`);
                                 }}
                               />
                             ))}

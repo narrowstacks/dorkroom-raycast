@@ -1,0 +1,37 @@
+{
+  "brands": {
+    "agfaphoto": "Agfa Photo",
+    "kodak": "Kodak",
+    "fujifilm": "Fujifilm",
+    "ilford": "Ilford",
+    "cinestill film": "CineStill",
+    "lomography": "Lomography",
+    "rollei": "Rollei",
+    "arista": "Arista",
+    "catlabs": "CatLABS",
+    "bergger": "Bergger",
+    "film photography project": "FPP",
+    "japan camera hunter": "JCH"
+  },
+  "films": {
+    "apx 400": "APX 400",
+    "apx 100": "APX 100",
+    "hp5+": "HP5 Plus",
+    "hp5 plus": "HP5 Plus",
+    "fp4+": "FP4 Plus",
+    "fp4 plus": "FP4 Plus",
+    "delta 100": "DELTA 100",
+    "delta 400": "DELTA 400",
+    "delta 3200": "DELTA 3200",
+    "portra 160": "Portra 160",
+    "portra 400": "Portra 400",
+    "portra 800": "Portra 800",
+    "tri-x": "Tri-X 400",
+    "trix": "Tri-X 400",
+    "tri x": "Tri-X 400"
+  },
+  "generic-replacements": {
+    "edu ultra": "EDU Ultra",
+    "professional": ""
+  }
+}

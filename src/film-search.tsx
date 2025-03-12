@@ -1,89 +1,87 @@
-import { ActionPanel, Action, List } from "@raycast/api";
-import { useFetch } from "@raycast/utils";
-import { useState } from "react";
-import { URLSearchParams } from "node:url";
+import { ActionPanel, Action, List, Icon, showToast, Toast } from "@raycast/api";
+import { useEffect, useState } from "react";
+import { useCachedPromise } from "@raycast/utils";
+import { Film } from "./types/film";
+import { getCachedFilms, clearCache } from "./lib/films";
+import { FilmListItem } from "./components/FilmListItem";
+import { FilmDetail } from "./components/FilmDetail";
+import { fuzzySearchFilms, normalizeNames } from "./lib/search";
 
 export default function Command() {
+  const [selectedFilm, setSelectedFilm] = useState<Film | null>(null);
+  const { data: rawFilms, isLoading, error, revalidate } = useCachedPromise(getCachedFilms);
   const [searchText, setSearchText] = useState("");
-  const { data, isLoading } = useFetch(
-    "https://api.npms.io/v2/search?" +
-      // send the search query to the API
-      new URLSearchParams({ q: searchText.length === 0 ? "@raycast/api" : searchText }),
-    {
-      parseResponse: parseFetchResponse,
-    },
-  );
+  const [isShowingDetail, setIsShowingDetail] = useState(false);
+
+  // Normalize film names
+  const films = rawFilms?.map(normalizeNames) ?? [];
+
+  useEffect(() => {
+    if (error) {
+      showToast({
+        style: Toast.Style.Failure,
+        title: "Error loading films",
+        message: error.message,
+      });
+    }
+  }, [error]);
+
+  const filteredFilms = films ? fuzzySearchFilms(films, searchText) : [];
+
+  if (isShowingDetail && selectedFilm) {
+    return <FilmDetail film={selectedFilm} onBack={() => setIsShowingDetail(false)} />;
+  }
 
   return (
     <List
       isLoading={isLoading}
       onSearchTextChange={setSearchText}
-      searchBarPlaceholder="Search npm packages..."
-      throttle
-    >
-      <List.Section title="Results" subtitle={data?.length + ""}>
-        {data?.map((searchResult) => <SearchListItem key={searchResult.name} searchResult={searchResult} />)}
-      </List.Section>
-    </List>
-  );
-}
-
-function SearchListItem({ searchResult }: { searchResult: SearchResult }) {
-  return (
-    <List.Item
-      title={searchResult.name}
-      subtitle={searchResult.description}
-      accessories={[{ text: searchResult.username }]}
+      searchBarPlaceholder="Search by name, brand, process, or type..."
+      navigationTitle="Film Search"
+      selectedItemId={selectedFilm?._id}
+      isShowingDetail
       actions={
         <ActionPanel>
-          <ActionPanel.Section>
-            <Action.OpenInBrowser title="Open in Browser" url={searchResult.url} />
-          </ActionPanel.Section>
-          <ActionPanel.Section>
-            <Action.CopyToClipboard
-              title="Copy Install Command"
-              content={`npm install ${searchResult.name}`}
-              shortcut={{ modifiers: ["cmd"], key: "." }}
-            />
-          </ActionPanel.Section>
+          <Action
+            title="Refresh Data"
+            onAction={async () => {
+              await clearCache();
+              await showToast({
+                style: Toast.Style.Animated,
+                title: "Refreshing data...",
+              });
+              await revalidate();
+            }}
+            icon={Icon.ArrowClockwise}
+          />
         </ActionPanel>
       }
-    />
+    >
+      {error ? (
+        <List.EmptyView
+          title="Error loading films"
+          description={error.message}
+          actions={
+            <ActionPanel>
+              <Action title="Try Again" onAction={revalidate} icon={Icon.ArrowClockwise} />
+            </ActionPanel>
+          }
+        />
+      ) : (
+        <List.Section title="Films" subtitle={filteredFilms.length.toString()}>
+          {filteredFilms.map((film) => (
+            <FilmListItem
+              key={film._id}
+              film={film}
+              onSelect={() => {
+                setSelectedFilm(film);
+                setIsShowingDetail(true);
+              }}
+              isSelected={selectedFilm?._id === film._id}
+            />
+          ))}
+        </List.Section>
+      )}
+    </List>
   );
-}
-
-/** Parse the response from the fetch query into something we can display */
-async function parseFetchResponse(response: Response) {
-  const json = (await response.json()) as
-    | {
-        results: {
-          package: {
-            name: string;
-            description?: string;
-            publisher?: { username: string };
-            links: { npm: string };
-          };
-        }[];
-      }
-    | { code: string; message: string };
-
-  if (!response.ok || "message" in json) {
-    throw new Error("message" in json ? json.message : response.statusText);
-  }
-
-  return json.results.map((result) => {
-    return {
-      name: result.package.name,
-      description: result.package.description,
-      username: result.package.publisher?.username,
-      url: result.package.links.npm,
-    } as SearchResult;
-  });
-}
-
-interface SearchResult {
-  name: string;
-  description?: string;
-  username?: string;
-  url: string;
 }
