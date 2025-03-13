@@ -652,7 +652,7 @@
     {
       "name": "recipe-manager",
       "title": "Development Recipes",
-      "subtitle": "Manage film development recipes",
+      "subtitle": "Create and view B&W film development recipes",
       "description": "Save and organize your film development recipes, with support for importing from FilmDev.org",
       "mode": "view",
       "icon": "recipe-icon.png"

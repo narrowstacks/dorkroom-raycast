@@ -21,7 +21,10 @@ interface RecipeFormProps {
 async function getFilmOptions(): Promise<Film[]> {
   try {
     const rawFilms = await getCachedFilms();
-    return (rawFilms as Film[]).map(normalizeNames).sort((a, b) => a.name.localeCompare(b.name));
+    return (rawFilms as Film[])
+      .filter((film) => !film.color) // Filter out color films
+      .map(normalizeNames)
+      .sort((a, b) => a.name.localeCompare(b.name));
   } catch (error) {
     console.error("Error loading films:", error);
     return [];

@@ -47,6 +47,7 @@ export const RECIPE_STRINGS = {
     VIEW: "View Recipe",
     IMPORT: "Import Recipe",
     NEW: "New Recipe",
+    CANCEL: "Cancel",
     DELETE_CONFIRM: {
       TITLE: "Delete Recipe",
       MESSAGE: "Are you sure you want to delete this recipe?",
@@ -125,6 +126,7 @@ export const RECIPE_STRINGS = {
       PROCESS: "Process",
       AGITATION: "Agitation",
       ADDITIONAL_NOTES: "Additional Notes",
+      SAMPLE_IMAGES: "Sample Images",
     },
     DETAILS: {
       DILUTION: "Dilution:",
@@ -140,5 +142,14 @@ export const RECIPE_STRINGS = {
   IMPORT: {
     FILMDEV_ID: "FilmDev.org Recipe ID",
     ID_PLACEHOLDER: "Enter the recipe ID from filmdev.org",
+    LOADING: "Importing recipe from FilmDev.org...",
+    DESCRIPTION: "Enter the recipe ID from filmdev.org to import a recipe.",
+    LOADING_DESCRIPTION: "Please wait while we import the recipe and fetch sample images...",
+    IMAGES: {
+      LOADING: "Fetching sample images...",
+      SUCCESS: (count: number) => `Found ${count} sample image${count === 1 ? '' : 's'}`,
+      NO_IMAGES: "No sample images found",
+      ERROR: "Failed to fetch images",
+    },
   },
 }; 

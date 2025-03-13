@@ -2,6 +2,7 @@ import { LocalStorage } from "@raycast/api";
 import { Recipe, FilmDevRecipe, FilmDevResponse } from "../types/recipe";
 import got from "got";
 import filmdevCodes from "../data/filmdev_codes.json";
+import { fetchFilmDevImages } from "../utils/recipe-actions";
 
 const RECIPES_STORAGE_KEY = "film_recipes";
 const FILMDEV_API_BASE = "https://filmdev.org/api/recipe";
@@ -96,9 +97,19 @@ export async function deleteRecipe(recipeId: string): Promise<void> {
 // Import a recipe from filmdev.org
 export async function importFilmDevRecipe(recipeId: string): Promise<Recipe> {
   try {
+    // Fetch recipe data from filmdev.org API
     const response = await got(`${FILMDEV_API_BASE}/${recipeId}`);
     const { recipe } = JSON.parse(response.body) as FilmDevResponse;
     const convertedRecipe = convertFilmDevRecipe(recipe);
+    
+    // Fetch images from filmdev.org if photos_link is available
+    if (recipe.photos_link) {
+      const imageUrls = await fetchFilmDevImages(recipe.photos_link);
+      if (imageUrls.length > 0) {
+        convertedRecipe.imageUrls = imageUrls;
+      }
+    }
+    
     await saveRecipe(convertedRecipe);
     return convertedRecipe;
   } catch (error) {

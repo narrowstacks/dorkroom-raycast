@@ -30,8 +30,28 @@ export function RecipeDetail({ recipe }: RecipeDetailProps) {
 - **${RECIPE_STRINGS.FORM.FIELDS.DURATION}:** ${RECIPE_STRINGS.DETAIL.DETAILS.DURATION(Math.round(recipe.steps[0].duration / 60))}
 
 ## ${RECIPE_STRINGS.DETAIL.SECTIONS.PROCESS}
-${recipe.steps[0].notes ? `### ${RECIPE_STRINGS.DETAIL.SECTIONS.AGITATION}\n${recipe.steps[0].notes}\n` : ""}
-${recipe.notes ? `### ${RECIPE_STRINGS.DETAIL.SECTIONS.ADDITIONAL_NOTES}\n${recipe.notes}` : ""}
+${
+  recipe.steps[0].notes
+    ? `### ${RECIPE_STRINGS.DETAIL.SECTIONS.AGITATION}
+  ${recipe.steps[0].notes}
+  `
+    : ""
+}
+${
+  recipe.notes
+    ? `### ${RECIPE_STRINGS.DETAIL.SECTIONS.ADDITIONAL_NOTES}
+  ${recipe.notes}`
+    : ""
+}
+
+${
+  recipe.imageUrls && recipe.imageUrls.length > 0
+    ? `
+## ${RECIPE_STRINGS.DETAIL.SECTIONS.SAMPLE_IMAGES}
+${recipe.imageUrls.map((url) => `![Sample Image](${url})`).join("\n\n")}
+`
+    : ""
+}
 
 ${recipe.source === "filmdev" ? `---\n*${RECIPE_STRINGS.DETAIL.SOURCE.FILMDEV}*` : ""}
 `;

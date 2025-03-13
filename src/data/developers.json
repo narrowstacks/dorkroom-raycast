@@ -13,7 +13,7 @@
         {
           "name": "Dilution B",
           "ratio": "1:31",
-          "description": "Common dilution for standard development"
+          "description": "Common standard dilution"
         },
         {
           "name": "Dilution C",
@@ -38,7 +38,7 @@
         {
           "name": "Dilution H",
           "ratio": "1:63",
-          "description": "Very economical, much longer development times"
+          "description": "Very economical dilution, half of B"
         }
       ]
     },

@@ -21,6 +21,7 @@ export interface Recipe {
   filmdevId?: string; // Only present if imported from filmdev.org
   dateAdded: string;
   lastModified: string;
+  imageUrls?: string[]; // URLs of images associated with the recipe
 }
 
 export interface FilmDevRecipe {
