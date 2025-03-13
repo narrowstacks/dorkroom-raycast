@@ -11,9 +11,10 @@ import {
 import { useEffect } from "react";
 import { DilutionForm, VolumeInputForm, NameForm, EditForm } from "./DilutionForm";
 import { DilutionDetail } from "./DilutionDetail";
-import { CalculatorDisplay } from "./CalculatorDisplay";
+import { CalculatorDisplay } from "./DilutionCalculatorDisplay";
 import { useDilutionCalculator } from "../hooks/useDilutionCalculator";
 import { formatDilutionResult } from "../utils/dilution";
+import { extractVolumeFromSearch } from "../utils/dilution";
 import { Color } from "@raycast/api";
 
 interface Preferences {
@@ -139,8 +140,7 @@ export function DilutionCalculator() {
                       title={`Use ${dilution.name} (${dilution.ratio})`}
                       icon={Icon.ArrowRight}
                       onAction={() => {
-                        const volumeMatch = searchText.match(/\d+(?:\.\d+)?/);
-                        const volume = volumeMatch ? volumeMatch[0] : "";
+                        const { volume } = extractVolumeFromSearch(searchText);
                         setSearchText(`${dilution.ratio.replace(":", "+")}${volume ? ` ${volume}` : " "}`);
                       }}
                     />
@@ -170,8 +170,7 @@ ${dil.description}`,
                                   icon={Icon.ArrowRight}
                                   onAction={() => {
                                     pop();
-                                    const volumeMatch = searchText.match(/\d+(?:\.\d+)?/);
-                                    const volume = volumeMatch ? volumeMatch[0] : "";
+                                    const { volume } = extractVolumeFromSearch(searchText);
                                     setSearchText(`${dil.ratio.replace(":", "+")}${volume ? ` ${volume}` : " "}`);
                                   }}
                                 />
@@ -311,8 +310,7 @@ ${dil.description}`,
                       title={`Use ${dilution.name} (${dilution.ratio})`}
                       icon={Icon.ArrowRight}
                       onAction={() => {
-                        const volumeMatch = searchText.match(/\d+(?:\.\d+)?/);
-                        const volume = volumeMatch ? volumeMatch[0] : "";
+                        const { volume } = extractVolumeFromSearch(searchText);
                         setSearchText(`${dilution.ratio.replace(":", "+")}${volume ? ` ${volume}` : " "}`);
                       }}
                     />
@@ -342,8 +340,7 @@ ${dil.description}`,
                                   icon={Icon.ArrowRight}
                                   onAction={() => {
                                     pop();
-                                    const volumeMatch = searchText.match(/\d+(?:\.\d+)?/);
-                                    const volume = volumeMatch ? volumeMatch[0] : "";
+                                    const { volume } = extractVolumeFromSearch(searchText);
                                     setSearchText(`${dil.ratio.replace(":", "+")}${volume ? ` ${volume}` : " "}`);
                                   }}
                                 />

@@ -105,31 +105,37 @@ export function fuzzyMatch(text: string, query: string): boolean {
   return queryIndex === query.length;
 }
 
-export function parseSearch(text: string, defaultNotation: "plus" | "colon"): { ratio: string; amount: number } | null {
-  // First try to match "ratio amount" pattern (e.g., "1+31 500" or "1:1:100 500")
-  const fullMatch = text.match(/^([0-9]+[+:][0-9]+(?::[0-9]+)?)\s+([0-9]+)$/);
-  if (fullMatch) {
+export function extractVolumeFromSearch(text: string): { volume: string; remainingText: string } {
+  // Try to find a volume at the end of the text
+  const volumeMatch = text.match(/\s+([0-9]+(?:\.[0-9]+)?)\s*$/);
+  if (volumeMatch) {
     return {
-      ratio: fullMatch[1],
-      amount: parseInt(fullMatch[2]),
+      volume: volumeMatch[1],
+      remainingText: text.slice(0, text.length - volumeMatch[0].length).trim()
     };
   }
+  return { volume: "", remainingText: text.trim() };
+}
 
-  // Try to match two numbers pattern (e.g., "31 500" -> "1+31 500" or "1:31 500")
-  const twoNumbersMatch = text.match(/^([0-9]+)\s+([0-9]+)$/);
-  if (twoNumbersMatch) {
+export function parseSearch(text: string, defaultNotation: "plus" | "colon"): { ratio: string; amount: number } | null {
+  const { volume, remainingText } = extractVolumeFromSearch(text);
+  const amount = volume ? parseFloat(volume) : 0;
+
+  // First try to match just a ratio pattern (e.g., "1+31" or "1:1:100")
+  const ratioMatch = remainingText.match(/^([0-9]+(?:[+:][0-9]+)*)$/);
+  if (ratioMatch) {
+    return { ratio: ratioMatch[1], amount };
+  }
+
+  // Try to match single number pattern (e.g., "31" -> "1+31" or "1:31")
+  const singleNumberMatch = remainingText.match(/^([0-9]+)$/);
+  if (singleNumberMatch) {
     const separator = defaultNotation === "plus" ? "+" : ":";
     return {
-      ratio: `1${separator}${twoNumbersMatch[1]}`,
-      amount: parseInt(twoNumbersMatch[2]),
+      ratio: `1${separator}${singleNumberMatch[1]}`,
+      amount
     };
-  }
-
-  // Then try to match just a ratio or single number
-  const ratioMatch = text.match(/^([0-9]+(?:[+:][0-9]+)*|[0-9]+)$/);
-  if (ratioMatch) {
-    return { ratio: ratioMatch[1], amount: 0 };
   }
 
   return null;
-} 
+}
