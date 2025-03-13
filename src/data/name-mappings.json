@@ -1,8 +1,8 @@
 {
   "brands": {
-    "agfaphoto": "Agfa Photo",
+    "agfaphoto": "AgfaPhoto",
     "kodak": "Kodak",
-    "fujifilm": "Fujifilm",
+    "fujifilm": "Fuji",
     "ilford": "Ilford",
     "cinestill film": "CineStill",
     "lomography": "Lomography",
@@ -28,10 +28,19 @@
     "portra 800": "Portra 800",
     "tri-x": "Tri-X 400",
     "trix": "Tri-X 400",
-    "tri x": "Tri-X 400"
+    "tri x": "Tri-X 400",
+    "50daylight xpro": "50D",
+    "800tungsten xpro": "800T"
   },
   "generic-replacements": {
     "edu ultra": "EDU Ultra",
-    "professional": ""
+    "professional": "",
+    "Iso": "ISO",
+    "Rpx": "RPX",
+    "xp2": "XP2",
+    "Gc": "GC",
+    "ultramax": "UltraMax",
+    "fujichrome": "",
+    "Bwxx": "BwXX"
   }
 }

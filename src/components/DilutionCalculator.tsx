@@ -1,12 +1,27 @@
-import { List, ActionPanel, Action, Icon, useNavigation, Detail } from "@raycast/api";
+import {
+  List,
+  ActionPanel,
+  Action,
+  Icon,
+  useNavigation,
+  Detail,
+  getPreferenceValues,
+  openExtensionPreferences,
+} from "@raycast/api";
 import { useEffect } from "react";
 import { DilutionForm, VolumeInputForm, NameForm, EditForm } from "./DilutionForm";
 import { DilutionDetail } from "./DilutionDetail";
 import { CalculatorDisplay } from "./CalculatorDisplay";
 import { useDilutionCalculator } from "../hooks/useDilutionCalculator";
 import { formatDilutionResult } from "../utils/dilution";
+import { Color } from "@raycast/api";
+
+interface Preferences {
+  preferredDeveloper?: string;
+}
 
 export function DilutionCalculator() {
+  const { preferredDeveloper } = getPreferenceValues<Preferences>();
   const {
     savedRatios,
     searchText,
@@ -26,6 +41,17 @@ export function DilutionCalculator() {
   } = useDilutionCalculator();
 
   const { push, pop } = useNavigation();
+
+  // Sort developers to put preferred developer first
+  const sortedDevelopers = [...developers].sort((a, b) => {
+    if (preferredDeveloper) {
+      const aIsPreferred = a.name.includes(preferredDeveloper.replace(/%/g, ""));
+      const bIsPreferred = b.name.includes(preferredDeveloper.replace(/%/g, ""));
+      if (aIsPreferred && !bIsPreferred) return -1;
+      if (!aIsPreferred && bIsPreferred) return 1;
+    }
+    return 0;
+  });
 
   useEffect(() => {
     if (pendingRatio) {
@@ -108,22 +134,23 @@ export function DilutionCalculator() {
               accessories={[{ text: developer.name }, { text: developer.brand }, { text: developer.type }]}
               actions={
                 <ActionPanel>
-                  <Action
-                    title={`Use ${dilution.name} (${dilution.ratio})`}
-                    icon={Icon.ArrowRight}
-                    onAction={() => {
-                      const volumeMatch = searchText.match(/\d+(?:\.\d+)?/);
-                      const volume = volumeMatch ? volumeMatch[0] : "";
-                      setSearchText(`${dilution.ratio.replace(":", "+")}${volume ? ` ${volume}` : " "}`);
-                    }}
-                  />
-                  <Action.Push
-                    title="View Developer Details"
-                    icon={Icon.Sidebar}
-                    target={
-                      <Detail
-                        markdown={`# ${developer.name}
-                        
+                  <ActionPanel.Section>
+                    <Action
+                      title={`Use ${dilution.name} (${dilution.ratio})`}
+                      icon={Icon.ArrowRight}
+                      onAction={() => {
+                        const volumeMatch = searchText.match(/\d+(?:\.\d+)?/);
+                        const volume = volumeMatch ? volumeMatch[0] : "";
+                        setSearchText(`${dilution.ratio.replace(":", "+")}${volume ? ` ${volume}` : " "}`);
+                      }}
+                    />
+                    <Action.Push
+                      title="View Developer Details"
+                      icon={Icon.Sidebar}
+                      target={
+                        <Detail
+                          markdown={`# ${developer.name}
+                          
 ## ${developer.brand} - ${developer.type}
 
 ### Common Dilutions
@@ -134,26 +161,45 @@ ${developer.commonDilutions
 ${dil.description}`,
   )
   .join("\n\n")}`}
-                        actions={
-                          <ActionPanel>
-                            {developer.commonDilutions.map((dil) => (
-                              <Action
-                                key={dil.name}
-                                title={`Use ${dil.name} (${dil.ratio})`}
-                                icon={Icon.ArrowRight}
-                                onAction={() => {
-                                  pop();
-                                  const volumeMatch = searchText.match(/\d+(?:\.\d+)?/);
-                                  const volume = volumeMatch ? volumeMatch[0] : "";
-                                  setSearchText(`${dil.ratio.replace(":", "+")}${volume ? ` ${volume}` : " "}`);
-                                }}
-                              />
-                            ))}
-                          </ActionPanel>
-                        }
+                          actions={
+                            <ActionPanel>
+                              {developer.commonDilutions.map((dil) => (
+                                <Action
+                                  key={dil.name}
+                                  title={`Use ${dil.name} (${dil.ratio})`}
+                                  icon={Icon.ArrowRight}
+                                  onAction={() => {
+                                    pop();
+                                    const volumeMatch = searchText.match(/\d+(?:\.\d+)?/);
+                                    const volume = volumeMatch ? volumeMatch[0] : "";
+                                    setSearchText(`${dil.ratio.replace(":", "+")}${volume ? ` ${volume}` : " "}`);
+                                  }}
+                                />
+                              ))}
+                            </ActionPanel>
+                          }
+                        />
+                      }
+                    />
+                  </ActionPanel.Section>
+                  <ActionPanel.Section title="Developer Preferences">
+                    {preferredDeveloper?.replace(/%/g, "") === developer.name ? (
+                      <Action
+                        title="Remove as Preferred Developer"
+                        icon={Icon.Star}
+                        style={Action.Style.Destructive}
+                        onAction={openExtensionPreferences}
+                        shortcut={{ modifiers: ["cmd", "shift"], key: "d" }}
                       />
-                    }
-                  />
+                    ) : (
+                      <Action
+                        title="Set as Preferred Developer"
+                        icon={Icon.Star}
+                        onAction={openExtensionPreferences}
+                        shortcut={{ modifiers: ["cmd", "shift"], key: "d" }}
+                      />
+                    )}
+                  </ActionPanel.Section>
                 </ActionPanel>
               }
             />
@@ -244,31 +290,39 @@ ${dil.description}`,
       </List.Section>
 
       <List.Section title="Manufacturer/Common Dilutions">
-        {developers.map((developer) =>
+        {sortedDevelopers.map((developer) =>
           developer.commonDilutions.map((dilution) => (
             <List.Item
               key={`${developer.name}-${dilution.name}`}
               title={`${developer.name} - ${dilution.name}`}
               subtitle={dilution.description}
-              accessories={[{ text: dilution.ratio }, { text: developer.brand }, { text: developer.type }]}
+              accessories={[
+                { text: dilution.ratio },
+                { text: developer.brand },
+                { text: developer.type },
+                ...(preferredDeveloper && developer.name.includes(preferredDeveloper.replace(/%/g, ""))
+                  ? [{ tag: { value: "Preferred", color: Color.Green } }]
+                  : []),
+              ]}
               actions={
                 <ActionPanel>
-                  <Action
-                    title={`Use ${dilution.name} (${dilution.ratio})`}
-                    icon={Icon.ArrowRight}
-                    onAction={() => {
-                      const volumeMatch = searchText.match(/\d+(?:\.\d+)?/);
-                      const volume = volumeMatch ? volumeMatch[0] : "";
-                      setSearchText(`${dilution.ratio.replace(":", "+")}${volume ? ` ${volume}` : " "}`);
-                    }}
-                  />
-                  <Action.Push
-                    title="View Developer Details"
-                    icon={Icon.Sidebar}
-                    target={
-                      <Detail
-                        markdown={`# ${developer.name}
-                        
+                  <ActionPanel.Section>
+                    <Action
+                      title={`Use ${dilution.name} (${dilution.ratio})`}
+                      icon={Icon.ArrowRight}
+                      onAction={() => {
+                        const volumeMatch = searchText.match(/\d+(?:\.\d+)?/);
+                        const volume = volumeMatch ? volumeMatch[0] : "";
+                        setSearchText(`${dilution.ratio.replace(":", "+")}${volume ? ` ${volume}` : " "}`);
+                      }}
+                    />
+                    <Action.Push
+                      title="View Developer Details"
+                      icon={Icon.Sidebar}
+                      target={
+                        <Detail
+                          markdown={`# ${developer.name}
+                          
 ## ${developer.brand} - ${developer.type}
 
 ### Common Dilutions
@@ -279,26 +333,45 @@ ${developer.commonDilutions
 ${dil.description}`,
   )
   .join("\n\n")}`}
-                        actions={
-                          <ActionPanel>
-                            {developer.commonDilutions.map((dil) => (
-                              <Action
-                                key={dil.name}
-                                title={`Use ${dil.name} (${dil.ratio})`}
-                                icon={Icon.ArrowRight}
-                                onAction={() => {
-                                  pop();
-                                  const volumeMatch = searchText.match(/\d+(?:\.\d+)?/);
-                                  const volume = volumeMatch ? volumeMatch[0] : "";
-                                  setSearchText(`${dil.ratio.replace(":", "+")}${volume ? ` ${volume}` : " "}`);
-                                }}
-                              />
-                            ))}
-                          </ActionPanel>
-                        }
+                          actions={
+                            <ActionPanel>
+                              {developer.commonDilutions.map((dil) => (
+                                <Action
+                                  key={dil.name}
+                                  title={`Use ${dil.name} (${dil.ratio})`}
+                                  icon={Icon.ArrowRight}
+                                  onAction={() => {
+                                    pop();
+                                    const volumeMatch = searchText.match(/\d+(?:\.\d+)?/);
+                                    const volume = volumeMatch ? volumeMatch[0] : "";
+                                    setSearchText(`${dil.ratio.replace(":", "+")}${volume ? ` ${volume}` : " "}`);
+                                  }}
+                                />
+                              ))}
+                            </ActionPanel>
+                          }
+                        />
+                      }
+                    />
+                  </ActionPanel.Section>
+                  <ActionPanel.Section title="Developer Preferences">
+                    {preferredDeveloper?.replace(/%/g, "") === developer.name ? (
+                      <Action
+                        title="Remove as Preferred Developer"
+                        icon={Icon.Star}
+                        style={Action.Style.Destructive}
+                        onAction={openExtensionPreferences}
+                        shortcut={{ modifiers: ["cmd", "shift"], key: "d" }}
                       />
-                    }
-                  />
+                    ) : (
+                      <Action
+                        title="Set as Preferred Developer"
+                        icon={Icon.Star}
+                        onAction={openExtensionPreferences}
+                        shortcut={{ modifiers: ["cmd", "shift"], key: "d" }}
+                      />
+                    )}
+                  </ActionPanel.Section>
                 </ActionPanel>
               }
             />

@@ -43,8 +43,8 @@
       ]
     },
     {
-      "name": "D-76",
-      "brand": "Kodak",
+      "name": "D-76/ID-11",
+      "brand": "Kodak/Ilford",
       "type": "B&W Film",
       "commonDilutions": [
         {
@@ -53,9 +53,14 @@
           "description": "Common dilution, better shadow detail"
         },
         {
+          "name": "1:2",
+          "ratio": "1:2",
+          "description": "Standard dilution"
+        },
+        {
           "name": "1:3",
           "ratio": "1:3",
-          "description": "More economical, slightly less sharpness"
+          "description": "More economical, less sharpness"
         }
       ]
     },
@@ -72,8 +77,8 @@
       ]
     },
     {
-      "name": "Rodinal",
-      "brand": "Agfa",
+      "name": "Rodinal/Adonal",
+      "brand": "Agfa/Adox",
       "type": "B&W Film",
       "commonDilutions": [
         {
@@ -90,6 +95,40 @@
           "name": "Stand",
           "ratio": "1+100",
           "description": "For stand development"
+        }
+      ]
+    },
+    {
+      "name": "Multigrade Developer",
+      "brand": "Ilford",
+      "type": "B&W Paper",
+      "commonDilutions": [
+        {
+          "name": "Standard",
+          "ratio": "1+9",
+          "description": "Standard dilution for all papers"
+        },
+        {
+          "name": "Economy",
+          "ratio": "1+14",
+          "description": "Economical dilution"
+        }
+      ]
+    },
+    {
+      "name": "PQ Universal",
+      "brand": "Ilford",
+      "type": "B&W Paper",
+      "commonDilutions": [
+        {
+          "name": "Standard",
+          "ratio": "1+9",
+          "description": "Standard dilution for all papers"
+        },
+        {
+          "name": "Economy",
+          "ratio": "1+19",
+          "description": "Economical dilution"
         }
       ]
     }

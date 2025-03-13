@@ -37,6 +37,7 @@ Raycast Extension Development
 
 - Use functional components and TypeScript interfaces.
 - Write declarative JSX.
+- Use LocalStorage from Raycast API, never localStorage
 - Use function declarations for components.
 - Utilize Raycast's built-in UI components, such as List, Detail, and Form, to ensure a consistent user experience. [Raycast API Reference](mdc:https:/developers.raycast.com/api-reference/user-interface)
 - Implement responsive design principles to ensure extensions are usable across different screen sizes.
