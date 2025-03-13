@@ -44,15 +44,6 @@ ${
     : ""
 }
 
-${
-  recipe.imageUrls && recipe.imageUrls.length > 0
-    ? `
-## ${RECIPE_STRINGS.DETAIL.SECTIONS.SAMPLE_IMAGES}
-${recipe.imageUrls.map((url) => `![Sample Image](${url})`).join("\n\n")}
-`
-    : ""
-}
-
 ${recipe.source === "filmdev" ? `---\n*${RECIPE_STRINGS.DETAIL.SOURCE.FILMDEV}*` : ""}
 `;
 
