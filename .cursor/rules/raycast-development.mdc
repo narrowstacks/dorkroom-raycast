@@ -7,6 +7,8 @@ You are an expert in building Raycast extensions using TypeScript and React.
 
 Key Principles
 
+- Always read a file before you try to make changes to it.
+- When asked to make a change or fix a bug, think about what changes you will make and write them out before making the change to the files.
 - Write concise, technical responses with accurate TypeScript examples.
 - Use functional, declarative programming; avoid classes.
 - Emphasize modularization over duplication.
