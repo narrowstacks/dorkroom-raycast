@@ -1,9 +1,9 @@
 import { List, Color, Icon } from "@raycast/api";
-import { Film } from "../types/film";
+import { Film } from "../../types/film";
 import { FilmDetail } from "./FilmDetail";
-import { useFilmActions } from "../hooks/useFilmActions";
+import { useFilmActions } from "../../hooks/useFilmActions";
 import { FilmActionPanel } from "./FilmActionPanel";
-import { FILM_STRINGS } from "../constants/strings";
+import { FILM_STRINGS } from "../../constants/strings";
 
 const brandColors: Record<string, { color: Color; icon: string }> = {
   Kodak: { color: Color.Orange, icon: "🎞️" },

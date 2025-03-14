@@ -1,8 +1,8 @@
 import { Detail } from "@raycast/api";
-import { Film } from "../types/film";
-import { useFilmActions } from "../hooks/useFilmActions";
+import { Film } from "../../types/film";
+import { useFilmActions } from "../../hooks/useFilmActions";
 import { FilmActionPanel } from "./FilmActionPanel";
-import { FILM_STRINGS } from "../constants/strings";
+import { FILM_STRINGS } from "../../constants/strings";
 
 interface FilmDetailProps {
   film: Film;

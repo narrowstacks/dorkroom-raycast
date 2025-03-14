@@ -1,5 +1,5 @@
 import { ActionPanel, Action, Icon } from "@raycast/api";
-import { Film, FilmActions } from "../types/film";
+import { Film, FilmActions } from "../../types/film";
 import { FilmDetail } from "./FilmDetail";
 
 interface FilmActionPanelProps {
