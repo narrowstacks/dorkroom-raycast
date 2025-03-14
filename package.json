@@ -81,53 +81,6 @@
               "value": "colon"
             }
           ]
-        },
-        {
-          "name": "preferredDeveloper",
-          "title": "Preferred Developer",
-          "description": "Choose your preferred developer for Massive Dev Chart searches",
-          "type": "dropdown",
-          "required": false,
-          "default": "",
-          "persistentOn": "onUpdate",
-          "data": [
-            {
-              "title": "No Preference",
-              "value": ""
-            },
-            {
-              "title": "Kodak D-76",
-              "value": "D-76"
-            },
-            {
-              "title": "Kodak HC-110",
-              "value": "HC-110%"
-            },
-            {
-              "title": "Kodak Xtol",
-              "value": "Xtol%"
-            },
-            {
-              "title": "Rodinal",
-              "value": "Rodinal"
-            },
-            {
-              "title": "Ilford ID-11",
-              "value": "ID-11%"
-            },
-            {
-              "title": "Ilford Ilfosol 3",
-              "value": "Ilfosol 3%"
-            },
-            {
-              "title": "Ilford Microphen",
-              "value": "Microphen%"
-            },
-            {
-              "title": "Ilford Perceptol",
-              "value": "Perceptol%"
-            }
-          ]
         }
       ]
     },

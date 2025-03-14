@@ -3,24 +3,19 @@ import { LocalStorage, getPreferenceValues, showToast, Toast } from "@raycast/ap
 import { DilutionRatio, DilutionResult, Developer, Preferences } from "../types/dilution";
 import { calculateDilution, fuzzyMatch, parseSearch, formatDilutionResult } from "../utils/dilution";
 import developersData from "../data/developers.json";
+import { usePreferredDeveloper } from "./usePreferredDeveloper";
 
 export function useDilutionCalculator() {
   const [savedRatios, setSavedRatios] = useState<DilutionRatio[]>([]);
   const [searchText, setSearchText] = useState("");
   const [pendingRatio, setPendingRatio] = useState<string | null>(null);
   const [developers, setDevelopers] = useState<Developer[]>([]);
-  const [preferredDeveloper, setPreferredDeveloper] = useState<string | undefined>(undefined);
   const { volumeUnit, defaultNotation } = getPreferenceValues<Preferences>();
+  const { preferredDeveloper, setPreferredDeveloper } = usePreferredDeveloper();
 
   useEffect(() => {
     loadSavedRatios();
     setDevelopers(developersData.developers);
-    // Load preferred developer from local storage on mount
-    LocalStorage.getItem<string>("preferredDeveloper").then((value) => {
-      if (value) {
-        setPreferredDeveloper(value);
-      }
-    });
   }, []);
 
   async function loadSavedRatios() {
