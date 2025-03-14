@@ -54,6 +54,58 @@ export const RECIPE_STRINGS = {
       ACTION: "Delete",
     },
   },
+  FORM: {
+    ERROR: {
+      IMPORT: "Failed to Import Recipe",
+    },
+    SUCCESS: {
+      IMPORT: "Recipe Imported Successfully",
+      SAVE: "Recipe Saved Successfully",
+      DELETE: "Recipe Deleted Successfully",
+    },
+    VALIDATION: {
+      FILM_REQUIRED: "Film is required",
+      DEVELOPER_REQUIRED: "Developer is required",
+      DILUTION_REQUIRED: "Dilution is required",
+      ISO_REQUIRED: "Valid ISO is required",
+      DURATION_REQUIRED: "Valid duration is required",
+      TEMPERATURE_REQUIRED: "Valid temperature is required",
+      PUSH_PULL_REQUIRED: "Valid push/pull value is required",
+    },
+    FIELDS: {
+      FILM: "Film",
+      FILM_NAME: "Film Name",
+      DEVELOPER: "Developer",
+      DEVELOPER_NAME: "Developer Name",
+      TEMPERATURE: (unit: string) => `Temperature (${unit})`,
+      DURATION: "Duration",
+      AGITATION: "Agitation",
+      NOTES: "Notes",
+      DILUTION: "Dilution",
+      ISO: "ISO",
+      PUSH_PULL: "Push/Pull",
+    },
+    PLACEHOLDERS: {
+      FILM_NAME: "Enter film name",
+      DEVELOPER_NAME: "Enter developer name",
+      TEMPERATURE: (unit: string) => `Enter temperature in ${unit}`,
+      AGITATION: "Enter agitation details",
+      NOTES: "Enter additional notes",
+      DILUTION: "Enter dilution ratio",
+      ISO: "Enter ISO value",
+      PUSH_PULL: "Enter push/pull value (e.g., 0, +1, -1)",
+      DURATION: "Enter duration in minutes",
+    },
+    CUSTOM: {
+      FILM: "Custom Film",
+      DEVELOPER: "Custom Developer",
+      DILUTION: "Custom Dilution"
+    },
+    TEMPERATURE_UNIT: {
+      C: "°C",
+      F: "°F",
+    },
+  },
   LIST: {
     SEARCH_PLACEHOLDER: "Search recipes...",
     EMPTY: {
