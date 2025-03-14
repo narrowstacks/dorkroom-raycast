@@ -54,58 +54,6 @@ export const RECIPE_STRINGS = {
       ACTION: "Delete",
     },
   },
-  FORM: {
-    TEMPERATURE_UNIT: {
-      C: "°C",
-      F: "°F",
-    },
-    FIELDS: {
-      FILM: "Film",
-      FILM_NAME: "Film Name",
-      DEVELOPER: "Developer",
-      DEVELOPER_NAME: "Developer Name",
-      DILUTION: "Dilution",
-      ISO: "ISO",
-      PUSH_PULL: "Push/Pull (stops)",
-      DURATION: "Development Time (minutes)",
-      TEMPERATURE: (unit: string) => `Temperature (${unit})`,
-      AGITATION: "Agitation",
-      NOTES: "Additional Notes",
-    },
-    PLACEHOLDERS: {
-      FILM_NAME: "e.g., Kodak Tri-X 400",
-      DEVELOPER_NAME: "e.g., Kodak D-76",
-      DILUTION: "e.g., 1+1 or 1:4",
-      ISO: "e.g., 400",
-      PUSH_PULL: "0 for normal, +1 for push, -1 for pull",
-      DURATION: "e.g., 11",
-      TEMPERATURE: (unit: string) => `e.g., ${unit === "°C" ? "20" : "68"}`,
-      AGITATION: "e.g., Initial 30s, then 10s every minute",
-      NOTES: "Any additional notes about the recipe",
-    },
-    CUSTOM: {
-      FILM: "Enter Custom Film...",
-      DEVELOPER: "Enter Custom Developer...",
-      DILUTION: "Enter Custom Dilution...",
-    },
-    VALIDATION: {
-      FILM_REQUIRED: "Film name is required",
-      DEVELOPER_REQUIRED: "Developer name is required",
-      DILUTION_REQUIRED: "Dilution is required",
-      ISO_REQUIRED: "Valid ISO is required",
-      DURATION_REQUIRED: "Valid development time is required",
-      TEMPERATURE_REQUIRED: "Valid temperature is required",
-      PUSH_PULL_REQUIRED: "Push/Pull value is required (use 0 for normal development)",
-    },
-    SUCCESS: {
-      SAVE: "Recipe saved!",
-      DELETE: "Recipe deleted!",
-      IMPORT: "Recipe imported!",
-    },
-    ERROR: {
-      IMPORT: "Failed to import recipe",
-    },
-  },
   LIST: {
     SEARCH_PLACEHOLDER: "Search recipes...",
     EMPTY: {
@@ -145,4 +93,66 @@ export const RECIPE_STRINGS = {
     DESCRIPTION: "Enter the recipe ID from filmdev.org to import a recipe.",
     LOADING_DESCRIPTION: "Please wait while we import the recipe...",
   },
-}; 
+};
+
+export const DILUTION_CALCULATOR_STRINGS = {
+  SECTIONS: {
+    CREATE_CUSTOM: "Create Custom Dilution",
+    DEVELOPER_DILUTIONS: "Developer Dilutions",
+    DEVELOPER_DILUTIONS_FOUND: (count: number) => `${count} found`,
+    CURRENT_CALCULATION: "Current Calculation",
+    SAVED_CALCULATIONS: "Saved Calculations",
+    SAVED_COUNT: (count: number) => `${count} saved`,
+    MANUFACTURER_COMMON: "Manufacturer/Common Dilutions"
+  },
+  ACTIONS: {
+    CALCULATE: "Calculate",
+    NEW_CALCULATION: "New Calculation",
+    USE_DILUTION: (name: string, ratio: string) => `Use ${name} (${ratio})`,
+    VIEW_DEVELOPER_DETAILS: "View Developer Details",
+    SET_PREFERRED_DEVELOPER: "Set as Preferred Developer",
+    REMOVE_PREFERRED_DEVELOPER: "Remove as Preferred Developer",
+    EDIT: "Edit",
+    DELETE: "Delete"
+  },
+  SEARCH: {
+    PLACEHOLDER: "Search developers or enter ratio (e.g., 'HC-110', 'Dilution B', '1+31', '31 500')"
+  },
+  FORM: {
+    FIELDS: {
+      RATIO: "Ratio",
+      TOTAL_AMOUNT: (unit: string) => `Total Amount (${unit})`,
+      SAVE_AS: "Save as (optional)",
+      NAME: "Name",
+      FIRST_CHEMICAL: "First Chemical Name (optional)",
+      SECOND_CHEMICAL: "Second Chemical Name (optional)",
+      ICON: "Icon (optional)"
+    },
+    PLACEHOLDERS: {
+      RATIO: "e.g., 1+31 or 1:1:100",
+      TOTAL_AMOUNT: "e.g., 300",
+      SAVE_AS: "e.g., DD-X 1+31 or Pyro 1:1:100",
+      ICON: "Enter a Raycast icon name or emoji",
+      FIRST_CHEMICAL: "e.g., Developer",
+      SECOND_CHEMICAL: "e.g., Activator"
+    },
+    DESCRIPTIONS: {
+      ICON: "You can use Raycast icons (e.g., 'beaker') or system emojis (e.g., '🧪')",
+      CURRENT_DILUTION: "Current Dilution"
+    },
+    ACTIONS: {
+      CALCULATE: "Calculate",
+      SAVE: "Save Changes"
+    },
+    VALIDATION: {
+      INVALID_AMOUNT: {
+        TITLE: "Invalid amount",
+        MESSAGE: "Please enter a valid number for the amount"
+      },
+      INVALID_RATIO: {
+        TITLE: "Invalid ratio format",
+        MESSAGE: "Please use format like '1+31' or '1:1:100'"
+      }
+    }
+  }
+} 

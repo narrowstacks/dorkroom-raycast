@@ -1,7 +1,8 @@
 import { Form, ActionPanel, Action, useNavigation, showToast, Toast } from "@raycast/api";
 import { useState } from "react";
-import { DilutionRatio } from "../types/dilution";
-import { calculateDilution } from "../utils/dilution";
+import { DilutionRatio } from "../../types/dilution";
+import { calculateDilution } from "../../utils/dilution";
+import { DILUTION_CALCULATOR_STRINGS as STRINGS } from "../../constants/strings";
 
 interface DilutionFormProps {
   onSubmit: (values: { ratio: string; amount: string; name?: string }) => Promise<void>;
@@ -19,24 +20,30 @@ export function DilutionForm({ onSubmit, volumeUnit }: DilutionFormProps) {
       actions={
         <ActionPanel>
           <Action.SubmitForm
-            title="Calculate"
+            title={STRINGS.FORM.ACTIONS.CALCULATE}
             onSubmit={(values) => onSubmit(values as { ratio: string; amount: string; name?: string })}
           />
         </ActionPanel>
       }
     >
-      <Form.TextField id="ratio" title="Ratio" placeholder="e.g., 1+31 or 1:1:100" value={ratio} onChange={setRatio} />
+      <Form.TextField
+        id="ratio"
+        title={STRINGS.FORM.FIELDS.RATIO}
+        placeholder={STRINGS.FORM.PLACEHOLDERS.RATIO}
+        value={ratio}
+        onChange={setRatio}
+      />
       <Form.TextField
         id="amount"
-        title={`Total Amount (${volumeUnit})`}
-        placeholder="e.g., 300"
+        title={STRINGS.FORM.FIELDS.TOTAL_AMOUNT(volumeUnit)}
+        placeholder={STRINGS.FORM.PLACEHOLDERS.TOTAL_AMOUNT}
         value={amount}
         onChange={setAmount}
       />
       <Form.TextField
         id="name"
-        title="Save as (optional)"
-        placeholder="e.g., DD-X 1+31 or Pyro 1:1:100"
+        title={STRINGS.FORM.FIELDS.SAVE_AS}
+        placeholder={STRINGS.FORM.PLACEHOLDERS.SAVE_AS}
         value={name}
         onChange={setName}
       />
@@ -58,7 +65,7 @@ export function VolumeInputForm({ ratio, volumeUnit, onSubmit }: VolumeInputForm
       actions={
         <ActionPanel>
           <Action.SubmitForm
-            title="Calculate"
+            title={STRINGS.FORM.ACTIONS.CALCULATE}
             onSubmit={() => {
               const parsedAmount = parseFloat(amount);
               if (!isNaN(parsedAmount) && parsedAmount > 0) {
@@ -71,8 +78,8 @@ export function VolumeInputForm({ ratio, volumeUnit, onSubmit }: VolumeInputForm
     >
       <Form.TextField
         id="amount"
-        title={`Total Amount (${volumeUnit})`}
-        placeholder="e.g., 300"
+        title={STRINGS.FORM.FIELDS.TOTAL_AMOUNT(volumeUnit)}
+        placeholder={STRINGS.FORM.PLACEHOLDERS.TOTAL_AMOUNT}
         value={amount}
         onChange={setAmount}
         autoFocus
@@ -96,7 +103,7 @@ export function NameForm({ ratio, amount, volumeUnit, onSubmit }: NameFormProps)
       actions={
         <ActionPanel>
           <Action.SubmitForm
-            title="Save"
+            title={STRINGS.FORM.ACTIONS.SAVE}
             onSubmit={() => {
               if (name.trim()) {
                 onSubmit(name.trim());
@@ -108,13 +115,13 @@ export function NameForm({ ratio, amount, volumeUnit, onSubmit }: NameFormProps)
     >
       <Form.TextField
         id="name"
-        title="Name"
-        placeholder="e.g., DD-X 1+31 or Pyro 1:1:100"
+        title={STRINGS.FORM.FIELDS.NAME}
+        placeholder={STRINGS.FORM.PLACEHOLDERS.SAVE_AS}
         value={name}
         onChange={setName}
         autoFocus
       />
-      <Form.Description title="Current Dilution" text={`${ratio} - ${amount}${volumeUnit}`} />
+      <Form.Description title={STRINGS.FORM.DESCRIPTIONS.CURRENT_DILUTION} text={`${ratio} - ${amount}${volumeUnit}`} />
     </Form>
   );
 }
@@ -140,8 +147,8 @@ export function EditForm({ ratio: initialRatio, volumeUnit, onSubmit }: EditForm
     if (!parsedAmount || isNaN(parsedAmount)) {
       await showToast({
         style: Toast.Style.Failure,
-        title: "Invalid amount",
-        message: "Please enter a valid number for the amount",
+        title: STRINGS.FORM.VALIDATION.INVALID_AMOUNT.TITLE,
+        message: STRINGS.FORM.VALIDATION.INVALID_AMOUNT.MESSAGE,
       });
       return;
     }
@@ -150,8 +157,8 @@ export function EditForm({ ratio: initialRatio, volumeUnit, onSubmit }: EditForm
     if (!result) {
       await showToast({
         style: Toast.Style.Failure,
-        title: "Invalid ratio format",
-        message: "Please use format like '1+31' or '1:1:100'",
+        title: STRINGS.FORM.VALIDATION.INVALID_RATIO.TITLE,
+        message: STRINGS.FORM.VALIDATION.INVALID_RATIO.MESSAGE,
       });
       return;
     }
@@ -176,45 +183,51 @@ export function EditForm({ ratio: initialRatio, volumeUnit, onSubmit }: EditForm
     <Form
       actions={
         <ActionPanel>
-          <Action.SubmitForm title="Save Changes" onSubmit={handleSubmit} />
+          <Action.SubmitForm title={STRINGS.FORM.ACTIONS.SAVE} onSubmit={handleSubmit} />
         </ActionPanel>
       }
     >
-      <Form.TextField id="ratio" title="Ratio" placeholder="e.g., 1+31 or 1:1:100" value={ratio} onChange={setRatio} />
+      <Form.TextField
+        id="ratio"
+        title={STRINGS.FORM.FIELDS.RATIO}
+        placeholder={STRINGS.FORM.PLACEHOLDERS.RATIO}
+        value={ratio}
+        onChange={setRatio}
+      />
       <Form.TextField
         id="amount"
-        title={`Total Amount (${volumeUnit})`}
-        placeholder="e.g., 300"
+        title={STRINGS.FORM.FIELDS.TOTAL_AMOUNT(volumeUnit)}
+        placeholder={STRINGS.FORM.PLACEHOLDERS.TOTAL_AMOUNT}
         value={amount}
         onChange={setAmount}
       />
       <Form.TextField
         id="name"
-        title="Name (optional)"
-        placeholder="e.g., DD-X 1+31 or Pyro 1:1:100"
+        title={STRINGS.FORM.FIELDS.NAME}
+        placeholder={STRINGS.FORM.PLACEHOLDERS.SAVE_AS}
         value={name}
         onChange={setName}
       />
       <Form.TextField
         id="icon"
-        title="Icon (optional)"
-        placeholder="Enter a Raycast icon name or emoji"
+        title={STRINGS.FORM.FIELDS.ICON}
+        placeholder={STRINGS.FORM.PLACEHOLDERS.ICON}
         value={icon}
         onChange={setIcon}
       />
-      <Form.Description text="You can use Raycast icons (e.g., 'beaker') or system emojis (e.g., '🧪')" />
+      <Form.Description text={STRINGS.FORM.DESCRIPTIONS.ICON} />
       <Form.TextField
         id="chemicalA"
-        title="First Chemical Name (optional)"
-        placeholder="e.g., Developer"
+        title={STRINGS.FORM.FIELDS.FIRST_CHEMICAL}
+        placeholder={STRINGS.FORM.PLACEHOLDERS.FIRST_CHEMICAL}
         value={chemicalA}
         onChange={setChemicalA}
       />
       {showChemicalB && (
         <Form.TextField
           id="chemicalB"
-          title="Second Chemical Name (optional)"
-          placeholder="e.g., Activator"
+          title={STRINGS.FORM.FIELDS.SECOND_CHEMICAL}
+          placeholder={STRINGS.FORM.PLACEHOLDERS.SECOND_CHEMICAL}
           value={chemicalB}
           onChange={setChemicalB}
         />

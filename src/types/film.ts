@@ -1,6 +1,41 @@
+import { Icon, KeyModifier, Keyboard } from "@raycast/api";
+
 export interface KeyFeature {
   _id: string;
   feature: string;
+}
+
+interface DevelopmentLink {
+  title: string;
+  url: string;
+  shortcut: {
+    modifiers: KeyModifier[];
+    key: Keyboard.KeyEquivalent;
+  };
+}
+
+export interface FilmActions {
+  favorite: {
+    title: string;
+    onAction: () => void;
+    icon: Icon;
+    shortcut: {
+      modifiers: KeyModifier[];
+      key: Keyboard.KeyEquivalent;
+    };
+  };
+  bhPhoto: {
+    title: string;
+    url: string;
+    shortcut: {
+      modifiers: KeyModifier[];
+      key: Keyboard.KeyEquivalent;
+    };
+  };
+  development: {
+    massiveDev: DevelopmentLink | null;
+    filmDev: DevelopmentLink | null;
+  } | null;
 }
 
 export interface Film {

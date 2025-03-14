@@ -1,5 +1,5 @@
 import { List, ActionPanel, Action, Icon } from "@raycast/api";
-import { DilutionResult } from "../types/dilution";
+import { DilutionResult } from "../../types/dilution";
 
 interface CalculatorDisplayProps {
   input: string;

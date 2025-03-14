@@ -9,11 +9,18 @@ export function useDilutionCalculator() {
   const [searchText, setSearchText] = useState("");
   const [pendingRatio, setPendingRatio] = useState<string | null>(null);
   const [developers, setDevelopers] = useState<Developer[]>([]);
+  const [preferredDeveloper, setPreferredDeveloper] = useState<string | undefined>(undefined);
   const { volumeUnit, defaultNotation } = getPreferenceValues<Preferences>();
 
   useEffect(() => {
     loadSavedRatios();
     setDevelopers(developersData.developers);
+    // Load preferred developer from local storage on mount
+    LocalStorage.getItem<string>("preferredDeveloper").then((value) => {
+      if (value) {
+        setPreferredDeveloper(value);
+      }
+    });
   }, []);
 
   async function loadSavedRatios() {
@@ -75,7 +82,7 @@ export function useDilutionCalculator() {
     const searchLower = searchText.toLowerCase();
     if (!searchLower) return [];
 
-    return developers.flatMap((dev) =>
+    const results = developers.flatMap((dev) =>
       dev.commonDilutions
         .filter(
           (dil) =>
@@ -92,7 +99,21 @@ export function useDilutionCalculator() {
           dilution: dil,
         })),
     );
-  }, [developers, searchText]);
+
+    // Sort results to put preferred developer first
+    if (preferredDeveloper) {
+      const preferredName = preferredDeveloper.replace(/%/g, "");
+      return results.sort((a, b) => {
+        const aIsPreferred = a.developer.name === preferredName;
+        const bIsPreferred = b.developer.name === preferredName;
+        if (aIsPreferred && !bIsPreferred) return -1;
+        if (!aIsPreferred && bIsPreferred) return 1;
+        return 0;
+      });
+    }
+
+    return results;
+  }, [developers, searchText, preferredDeveloper]);
 
   // Get current calculation based on search text
   const currentCalculation = useMemo(() => {
@@ -128,5 +149,7 @@ export function useDilutionCalculator() {
     updateSavedRatio,
     calculateDilution,
     formatDilutionResult,
+    preferredDeveloper,
+    setPreferredDeveloper,
   };
 } 

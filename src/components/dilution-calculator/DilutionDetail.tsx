@@ -1,5 +1,5 @@
 import { Detail, ActionPanel, Action, Icon, useNavigation } from "@raycast/api";
-import { DilutionResult } from "../types/dilution";
+import { DilutionResult } from "../../types/dilution";
 
 interface DilutionDetailProps {
   result: DilutionResult;
