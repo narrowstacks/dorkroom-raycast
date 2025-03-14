@@ -4,7 +4,9 @@ import { Recipe } from "./types/recipe";
 import { getSavedRecipes, searchRecipes } from "./lib/recipes";
 import { useCachedPromise } from "@raycast/utils";
 import { RECIPE_STRINGS } from "./constants/strings";
-import { RecipeDetail, RecipeForm, ImportFilmDevForm } from "./components/recipe-manager";
+import { RecipeDetail } from "./components/recipe-manager/RecipeDetail";
+import { RecipeForm } from "./components/recipe-manager/RecipeForm";
+import { ImportFilmDevForm } from "./components/recipe-manager/ImportFilmDevForm";
 import { handleSaveRecipe, handleDeleteRecipe } from "./utils/recipe-actions";
 
 interface Preferences {

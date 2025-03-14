@@ -164,6 +164,7 @@ export const DILUTION_CALCULATOR_STRINGS = {
     VIEW_DEVELOPER_DETAILS: "View Developer Details",
     SET_PREFERRED_DEVELOPER: "Set as Preferred Developer",
     REMOVE_PREFERRED_DEVELOPER: "Remove as Preferred Developer",
+    PREFERRED_TAG: "Preferred",
     EDIT: "Edit",
     DELETE: "Delete"
   },

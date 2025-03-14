@@ -5,16 +5,6 @@ import { useFilmActions } from "../../hooks/useFilmActions";
 import { FilmActionPanel } from "./FilmActionPanel";
 import { FILM_STRINGS } from "../../constants/strings";
 
-const brandColors: Record<string, { color: Color; icon: string }> = {
-  Kodak: { color: Color.Orange, icon: "🎞️" },
-  Ilford: { color: Color.Green, icon: "🎞️" },
-  Fujifilm: { color: Color.Red, icon: "🎞️" },
-  CineStill: { color: Color.Blue, icon: "🎞️" },
-  Lomography: { color: Color.Purple, icon: "🎞️" },
-  ADOX: { color: Color.Magenta, icon: "🎞️" },
-  Fomapan: { color: Color.Yellow, icon: "🎞️" },
-};
-
 interface FilmListItemProps {
   film: Film;
   onSelect: () => void;
@@ -25,7 +15,6 @@ interface FilmListItemProps {
 
 export function FilmListItem({ film, onSelect, isSelected, isFavorite, onToggleFavorite }: FilmListItemProps) {
   const { metadata, actions } = useFilmActions({ film, isFavorite, onToggleFavorite });
-  const brandConfig = brandColors[film.brand] || { color: Color.SecondaryText, icon: "🎞️" };
 
   return (
     <List.Item
@@ -59,7 +48,7 @@ export function FilmListItem({ film, onSelect, isSelected, isFavorite, onToggleF
                   <List.Item.Detail.Metadata.TagList.Item
                     key={feature._id}
                     text={feature.feature}
-                    color={film.color ? "#ff6b6b" : "#4a4a4a"}
+                    color={film.color ? "#ff6b6b" : "#ffffff"}
                   />
                 ))}
               </List.Item.Detail.Metadata.TagList>

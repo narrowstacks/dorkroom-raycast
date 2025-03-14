@@ -1,7 +1,6 @@
 import { LocalStorage } from "@raycast/api";
 import { Recipe, FilmDevRecipe, FilmDevResponse } from "../types/recipe";
 import got from "got";
-import filmdevCodes from "../data/filmdev_codes.json";
 
 const RECIPES_STORAGE_KEY = "film_recipes";
 const FILMDEV_API_BASE = "https://filmdev.org/api/recipe";

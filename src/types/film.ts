@@ -1,4 +1,4 @@
-import { Icon, KeyModifier, Keyboard } from "@raycast/api";
+import { Icon, Keyboard } from "@raycast/api";
 
 export interface KeyFeature {
   _id: string;
@@ -9,7 +9,7 @@ interface DevelopmentLink {
   title: string;
   url: string;
   shortcut: {
-    modifiers: KeyModifier[];
+    modifiers: Keyboard.KeyModifier[];
     key: Keyboard.KeyEquivalent;
   };
 }
@@ -20,7 +20,7 @@ export interface FilmActions {
     onAction: () => void;
     icon: Icon;
     shortcut: {
-      modifiers: KeyModifier[];
+      modifiers: Keyboard.KeyModifier[];
       key: Keyboard.KeyEquivalent;
     };
   };
@@ -28,7 +28,7 @@ export interface FilmActions {
     title: string;
     url: string;
     shortcut: {
-      modifiers: KeyModifier[];
+      modifiers: Keyboard.KeyModifier[];
       key: Keyboard.KeyEquivalent;
     };
   };

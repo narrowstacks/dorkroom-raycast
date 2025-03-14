@@ -336,7 +336,7 @@ ${dil.description}`,
                 { text: developer.brand },
                 { text: developer.type },
                 ...(preferredDeveloper && developer.name.includes(preferredDeveloper.replace(/%/g, ""))
-                  ? [{ tag: { value: "Default", color: Color.Green } }]
+                  ? [{ tag: { value: STRINGS.ACTIONS.PREFERRED_TAG, color: Color.Green } }]
                   : []),
               ]}
               actions={

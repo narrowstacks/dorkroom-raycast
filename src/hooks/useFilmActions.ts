@@ -1,4 +1,4 @@
-import { getPreferenceValues, Icon, KeyModifier, Keyboard } from "@raycast/api"
+import { getPreferenceValues, Icon, Keyboard } from "@raycast/api"
 import { Film } from "../types/film"
 import { generateBHPhotoUrl, generateMassiveDevChartUrl, generateFilmDevUrls } from "../lib/urls"
 import { FILM_STRINGS } from "../constants/strings"
@@ -48,12 +48,12 @@ export function useFilmActions({ film, isFavorite, onToggleFavorite, onBack }: F
       title: isFavorite ? FILM_STRINGS.FAVORITES.REMOVE : FILM_STRINGS.FAVORITES.ADD,
       onAction: onToggleFavorite,
       icon: isFavorite ? Icon.StarDisabled : Icon.Star,
-      shortcut: { modifiers: ["cmd" as KeyModifier], key: "f" as Keyboard.KeyEquivalent },
+      shortcut: { modifiers: ["cmd" as Keyboard.KeyModifier], key: "f" as Keyboard.KeyEquivalent },
     },
     bhPhoto: {
       title: `${film.brand} ${film.name}`,
       url: bhPhotoUrl,
-      shortcut: { modifiers: ["cmd" as KeyModifier], key: "b" as Keyboard.KeyEquivalent },
+      shortcut: { modifiers: ["cmd" as Keyboard.KeyModifier], key: "b" as Keyboard.KeyEquivalent },
     },
   }
 
@@ -66,7 +66,7 @@ export function useFilmActions({ film, isFavorite, onToggleFavorite, onBack }: F
                 ? `View Times for ${preferredDeveloper.replace(/%/g, "")}`
                 : "View Development Times",
               url: massiveDevChartUrl,
-              shortcut: { modifiers: ["cmd" as KeyModifier], key: "d" as Keyboard.KeyEquivalent },
+              shortcut: { modifiers: ["cmd" as Keyboard.KeyModifier], key: "d" as Keyboard.KeyEquivalent },
             }
           : null,
         filmDev: filmDevSearchUrl
@@ -75,7 +75,7 @@ export function useFilmActions({ film, isFavorite, onToggleFavorite, onBack }: F
                 ? `View Recipes for ${preferredDeveloper.replace(/%/g, "")}`
                 : "View Development Recipes",
               url: filmDevSearchUrl,
-              shortcut: { modifiers: ["cmd" as KeyModifier], key: "r" as Keyboard.KeyEquivalent },
+              shortcut: { modifiers: ["cmd" as Keyboard.KeyModifier], key: "r" as Keyboard.KeyEquivalent },
             }
           : null,
       }

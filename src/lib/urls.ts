@@ -1,40 +1,10 @@
 import { Film } from "../types/film";
-import filmdevCodes from "../data/filmdev_codes.json";
 import Fuse from "fuse.js";
 import { findMatchingFilm } from "./massive-dev-chart";
 
 interface UrlGeneratorOptions {
   tempUnit: "C" | "F";
   preferredDeveloper?: string;
-}
-
-// Helper function to find the film code in filmdev_codes.json
-function findFilmDevCode(brand: string, name: string): string | null {
-  const films = filmdevCodes.film[0];
-  // Remove "Plus" or "+" from the name for FilmDev.org search
-  const cleanName = name.replace(/\s*\+?\s*plus\s*/gi, "");
-  const searchString = `${brand} ${cleanName}`;
-
-  // Create array of film entries for fuzzy search
-  const filmEntries = Object.entries(films).map(([code, filmName]) => ({
-    code,
-    name: (filmName as string).replace(/\s*\+?\s*plus\s*/gi, ""), // Also clean the target names
-  }));
-
-  // Initialize Fuse for fuzzy search
-  const fuse = new Fuse(filmEntries, {
-    keys: ["name"],
-    threshold: 0.3,
-    includeScore: true,
-  });
-
-  // Search for the film
-  const results = fuse.search(searchString);
-  if (results.length > 0 && results[0].score && results[0].score < 0.4) {
-    return results[0].item.code;
-  }
-
-  return null;
 }
 
 export function generateBHPhotoUrl(film: Film): string {
