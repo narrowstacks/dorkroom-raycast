@@ -8,7 +8,7 @@ interface UrlGeneratorOptions {
 }
 
 export function generateBHPhotoUrl(film: Film): string {
-  return `https://www.bhphotovideo.com/c/search?q=${encodeURIComponent(`${film.brand} ${film.name} film`)}`;
+  return `https://www.bhphotovideo.com/c/search?q=${encodeURIComponent(`${film.brand} ${film.name}`)}`;
 }
 
 export function generateMassiveDevChartUrl(film: Film, options: UrlGeneratorOptions): string | null {
