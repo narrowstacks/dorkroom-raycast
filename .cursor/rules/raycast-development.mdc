@@ -1,6 +1,6 @@
 ---
 description: This ruleset is for developing code complaint with the Raycast Extension API
-globs: *.tsx, *.ts
+globs: *.tsx, *.ts, *.json
 alwaysApply: false
 ---
 You are an expert in building Raycast extensions using TypeScript and React.
