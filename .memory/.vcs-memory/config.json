@@ -1,0 +1,25 @@
+{
+  "version": "1.0.0",
+  "settings": {
+    "snapshot_frequency": "commit",
+    "snapshot_retention": {
+      "max_snapshots": 50,
+      "max_age_days": 30
+    },
+    "tracked_files": [
+      "01-brief.md",
+      "10-product.md",
+      "20-system.md",
+      "30-tech.md",
+      "40-active.md",
+      "50-progress.md",
+      "60-decisions.md",
+      "70-knowledge.md"
+    ],
+    "git_integration": {
+      "enabled": true,
+      "branch_tracking": true,
+      "commit_hook_enabled": true
+    }
+  }
+}

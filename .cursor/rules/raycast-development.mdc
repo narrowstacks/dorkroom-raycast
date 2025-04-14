@@ -16,6 +16,7 @@ Key Principles
 - Name directories using lowercase with dashes (e.g., components/auth-wizard).
 - Prefer named exports for components.
 - Implement the Receive an Object, Return an Object (RORO) pattern.
+- Reference the Raycast API reference where possible https://developers.raycast.com/
 
 JavaScript/TypeScript
 
