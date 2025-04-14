@@ -91,14 +91,25 @@
       "description": "Save and organize your film development recipes, with support for importing from FilmDev.org",
       "mode": "view",
       "icon": "recipe-icon.png"
+    },
+    {
+      "name": "easel-calculator",
+      "title": "Easel Calculator",
+      "subtitle": "Calculate accurate easel borders",
+      "description": "Calculate accurate darkroom easel borders with centering, offsets, and paper size compensation",
+      "mode": "view"
     }
   ],
   "dependencies": {
-    "@raycast/api": "^1.93.2",
+    "@raycast/api": "^1.60.3",
     "@raycast/utils": "^1.17.0",
     "@types/got": "^9.6.12",
+    "@types/uuid": "^10.0.0",
     "fuse.js": "^7.1.0",
-    "got": "^14.4.6"
+    "got": "^14.4.6",
+    "node-html-to-image": "^5.0.0",
+    "svg-builder": "^2.0.0",
+    "uuid": "^11.1.0"
   },
   "devDependencies": {
     "@raycast/eslint-config": "^1.0.11",
