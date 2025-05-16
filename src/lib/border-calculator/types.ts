@@ -1,69 +1,69 @@
 export interface PaperDimensions {
-  width: number
-  height: number
+  width: number;
+  height: number;
 }
 
 export interface BorderTemplate {
-  id: string
-  name: string
-  paperDimensions: PaperDimensions
+  id: string;
+  name: string;
+  paperDimensions: PaperDimensions;
   aspectRatio: {
-    width: number
-    height: number
-  }
-  minimumBorder: number
-  horizontalOffset: number
-  verticalOffset: number
-  createdAt: number
-  updatedAt: number
+    width: number;
+    height: number;
+  };
+  minimumBorder: number;
+  horizontalOffset: number;
+  verticalOffset: number;
+  createdAt: number;
+  updatedAt: number;
 }
 
 export interface BorderCalculation {
   printDimensions: {
-    width: number
-    height: number
-  }
+    width: number;
+    height: number;
+  };
   borders: {
-    left: number
-    right: number
-    top: number
-    bottom: number
-  }
+    left: number;
+    right: number;
+    top: number;
+    bottom: number;
+  };
   bladePositions: {
-    left: number
-    right: number
-    top: number
-    bottom: number
-  }
+    left: number;
+    right: number;
+    top: number;
+    bottom: number;
+  };
   easel: {
-    size: EaselSize
+    size: EaselSize;
     offsets: {
-      width: number
-      height: number
-    }
-  }
-  warnings: string[]
+      width: number;
+      height: number;
+    };
+  };
+  warnings: string[];
 }
 
 export interface BorderPreferences {
-  defaultPaperSize: PaperDimensions
-  defaultMinimumBorder: number
-  useMetric: boolean
-  snapToQuarter: boolean
+  defaultPaperSize: PaperDimensions;
+  defaultMinimumBorder: number;
+  useMetric: boolean;
+  snapToQuarter: boolean;
 }
 
 export const DEFAULT_PREFERENCES: BorderPreferences = {
   defaultPaperSize: { width: 8, height: 10 },
   defaultMinimumBorder: 0.75,
   useMetric: false,
-  snapToQuarter: true
-}
+  snapToQuarter: true,
+};
 
 // Standard easel sizes in inches
 export interface EaselSize {
-  name: string
-  width: number
-  height: number
+  name: string;
+  width: number;
+  height: number;
 }
 
 export const STANDARD_EASEL_SIZES: EaselSize[] = [
@@ -71,15 +71,15 @@ export const STANDARD_EASEL_SIZES: EaselSize[] = [
   { name: "8×10", width: 8, height: 10 },
   { name: "11×14", width: 11, height: 14 },
   { name: "16×20", width: 16, height: 20 },
-  { name: "20×24", width: 20, height: 24 }
-]
+  { name: "20×24", width: 20, height: 24 },
+];
 
 // Common paper sizes in inches
 export interface PaperSize {
-  label: string
-  value: string
-  width: number
-  height: number
+  label: string;
+  value: string;
+  width: number;
+  height: number;
 }
 
 export const PAPER_SIZES: PaperSize[] = [
@@ -90,15 +90,15 @@ export const PAPER_SIZES: PaperSize[] = [
   { label: "11×14", value: "11x14", width: 11, height: 14 },
   { label: "16×20", value: "16x20", width: 16, height: 20 },
   { label: "20×24", value: "20x24", width: 20, height: 24 },
-  { label: "Custom", value: "custom", width: 0, height: 0 }
-]
+  { label: "Custom", value: "custom", width: 0, height: 0 },
+];
 
 // Common aspect ratios
 export interface AspectRatio {
-  label: string
-  value: string
-  width: number
-  height: number
+  label: string;
+  value: string;
+  width: number;
+  height: number;
 }
 
 export const ASPECT_RATIOS: AspectRatio[] = [
@@ -111,8 +111,8 @@ export const ASPECT_RATIOS: AspectRatio[] = [
   { label: "5:4 (4×5)", value: "5/4", width: 5, height: 4 },
   { label: "7:5 (5×7)", value: "7/5", width: 7, height: 5 },
   { label: "4:3", value: "4/3", width: 4, height: 3 },
-  { label: "Custom", value: "custom", width: 0, height: 0 }
-]
+  { label: "Custom", value: "custom", width: 0, height: 0 },
+];
 
 // UI Constants
-export const BLADE_THICKNESS = 15 
+export const BLADE_THICKNESS = 15;

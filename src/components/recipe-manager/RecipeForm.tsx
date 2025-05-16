@@ -8,6 +8,14 @@ import { normalizeNames } from "../../lib/search";
 import { RECIPE_STRINGS } from "../../constants/strings";
 import { celsiusToFahrenheit, fahrenheitToCelsius } from "../../utils/temperature";
 
+interface RecipeFormValues {
+  duration: string;
+  temperature: string;
+  pushPull: string;
+  agitation?: string;
+  notes?: string;
+}
+
 interface Preferences {
   tempUnit: "C" | "F";
 }
@@ -45,7 +53,8 @@ export function RecipeForm({ recipe, onSave }: RecipeFormProps) {
   const [customFilm, setCustomFilm] = useState(false);
   const [customDeveloper, setCustomDeveloper] = useState(false);
   const [customDilution, setCustomDilution] = useState(false);
-  const [error, setError] = useState<string | undefined>();
+  // Use setError to set validation errors
+  const [, setError] = useState<string | undefined>();
 
   // Form field values
   const [isoValue, setIsoValue] = useState<string>(recipe?.iso?.toString() || "");
@@ -152,7 +161,7 @@ export function RecipeForm({ recipe, onSave }: RecipeFormProps) {
     }
   };
 
-  async function handleSubmit(values: any) {
+  async function handleSubmit(values: RecipeFormValues) {
     // Get the film name from either selected film or custom input
     const filmName = customFilm ? customFilmName : selectedFilmName;
 

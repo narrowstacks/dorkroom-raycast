@@ -22,7 +22,7 @@ ${result.labels.map((label, i) => `- ${label}: ${result.volumes[i]}${volumeUnit}
       navigationTitle="Dilution Result"
       actions={
         <ActionPanel>
-          {onSave && <Action title="Save With Name" icon={Icon.SaveDocument} onAction={onSave} />}
+          {onSave && <Action title="Save with Name" icon={Icon.SaveDocument} onAction={onSave} />}
           <Action.CopyToClipboard
             title="Copy Results"
             content={result.labels.map((label, i) => `${label}: ${result.volumes[i]}${volumeUnit}`).join(", ")}

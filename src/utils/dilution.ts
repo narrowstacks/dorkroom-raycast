@@ -111,7 +111,7 @@ export function extractVolumeFromSearch(text: string): { volume: string; remaini
   if (volumeMatch) {
     return {
       volume: volumeMatch[1],
-      remainingText: text.slice(0, text.length - volumeMatch[0].length).trim()
+      remainingText: text.slice(0, text.length - volumeMatch[0].length).trim(),
     };
   }
   return { volume: "", remainingText: text.trim() };
@@ -133,7 +133,7 @@ export function parseSearch(text: string, defaultNotation: "plus" | "colon"): { 
     const separator = defaultNotation === "plus" ? "+" : ":";
     return {
       ratio: `1${separator}${singleNumberMatch[1]}`,
-      amount
+      amount,
     };
   }
 

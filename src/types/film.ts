@@ -54,4 +54,4 @@ export interface Film {
   dateAdded: string;
   searchBrand?: string;
   searchName?: string;
-} 
+}

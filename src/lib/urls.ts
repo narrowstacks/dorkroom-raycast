@@ -30,7 +30,10 @@ export function generateMassiveDevChartUrl(film: Film, options: UrlGeneratorOpti
   return `https://www.digitaltruth.com/devchart.php?Film=${encodedFilm}&Developer=${encodedDeveloper}&mdc=Search&TempUnits=${options.tempUnit}&TimeUnits=T`;
 }
 
-export function generateFilmDevUrls(film: Film, options: UrlGeneratorOptions): { showUrl: string | null; searchUrl: string | null } {
+export function generateFilmDevUrls(
+  film: Film,
+  options: UrlGeneratorOptions,
+): { showUrl: string | null; searchUrl: string | null } {
   // Don't generate URLs for color films
   if (film.color) {
     return { showUrl: null, searchUrl: null };
@@ -39,12 +42,12 @@ export function generateFilmDevUrls(film: Film, options: UrlGeneratorOptions): {
   // Generate the search URL with just the film name and developer if available
   let searchUrl = null;
   const searchTerms = [film.name];
-  
+
   if (options.preferredDeveloper) {
     searchTerms.push(options.preferredDeveloper);
   }
-  
-  searchUrl = `https://filmdev.org/recipe/search?search=${searchTerms.map(term => term.replace(/ /g, "+")).join("+")}`;
+
+  searchUrl = `https://filmdev.org/recipe/search?search=${searchTerms.map((term) => term.replace(/ /g, "+")).join("+")}`;
 
   return { showUrl: null, searchUrl };
 }

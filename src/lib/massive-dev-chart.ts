@@ -139,9 +139,9 @@ const fuse = new Fuse(massiveDevChartFilms, {
 
 export function findMatchingFilm(brand: string, name: string): MassiveDevChartFilm | null {
   const searchString = `${brand} ${name}`;
-  
+
   // First try exact match
-  const exactMatch = massiveDevChartFilms.find(film => {
+  const exactMatch = massiveDevChartFilms.find((film) => {
     const normalizedFilm = film.displayName.toLowerCase();
     const normalizedSearch = searchString.toLowerCase();
     return normalizedFilm.includes(normalizedSearch) || normalizedSearch.includes(normalizedFilm);
@@ -164,4 +164,4 @@ export function findMatchingFilm(brand: string, name: string): MassiveDevChartFi
   }
 
   return null;
-} 
+}

@@ -144,5 +144,5 @@ export const developers: Developer[] = [
   { value: "Uncle%", displayName: "Uncle Mort's" },
   { value: "WD2D+%", displayName: "WD2D+" },
   { value: "Windisch%", displayName: "Windisch" },
-  { value: "XT-3", displayName: "XT-3" }
-]; 
+  { value: "XT-3", displayName: "XT-3" },
+];

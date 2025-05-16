@@ -32,4 +32,4 @@ export interface Developer {
     ratio: string;
     description: string;
   }[];
-} 
+}

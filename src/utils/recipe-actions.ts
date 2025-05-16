@@ -33,4 +33,4 @@ export async function handleDeleteRecipe(recipeId: string, revalidate: () => voi
     return true;
   }
   return false;
-} 
+}

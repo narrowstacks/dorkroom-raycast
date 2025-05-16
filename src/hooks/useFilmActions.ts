@@ -1,31 +1,31 @@
-import { getPreferenceValues, Icon, Keyboard } from "@raycast/api"
-import { Film } from "../types/film"
-import { generateBHPhotoUrl, generateMassiveDevChartUrl, generateFilmDevUrls } from "../lib/urls"
-import { FILM_STRINGS } from "../constants/strings"
-import { usePreferredDeveloper } from "./usePreferredDeveloper"
+import { getPreferenceValues, Icon, Keyboard } from "@raycast/api";
+import { Film } from "../types/film";
+import { generateBHPhotoUrl, generateMassiveDevChartUrl, generateFilmDevUrls } from "../lib/urls";
+import { FILM_STRINGS } from "../constants/strings";
+import { usePreferredDeveloper } from "./usePreferredDeveloper";
 
 interface FilmActionsConfig {
-  film: Film
-  isFavorite: boolean
-  onToggleFavorite: () => void
-  onBack?: () => void
+  film: Film;
+  isFavorite: boolean;
+  onToggleFavorite: () => void;
+  onBack?: () => void;
 }
 
 interface Preferences {
-  tempUnit: "C" | "F"
+  tempUnit: "C" | "F";
 }
 
 export function useFilmActions({ film, isFavorite, onToggleFavorite, onBack }: FilmActionsConfig) {
-  const { tempUnit } = getPreferenceValues<Preferences>()
-  const { preferredDeveloper } = usePreferredDeveloper()
+  const { tempUnit } = getPreferenceValues<Preferences>();
+  const { preferredDeveloper } = usePreferredDeveloper();
 
   // Generate all URLs
-  const bhPhotoUrl = generateBHPhotoUrl(film)
-  const massiveDevChartUrl = generateMassiveDevChartUrl(film, { tempUnit, preferredDeveloper })
+  const bhPhotoUrl = generateBHPhotoUrl(film);
+  const massiveDevChartUrl = generateMassiveDevChartUrl(film, { tempUnit, preferredDeveloper });
   const { showUrl: filmDevShowUrl, searchUrl: filmDevSearchUrl } = generateFilmDevUrls(film, {
     tempUnit,
     preferredDeveloper,
-  })
+  });
 
   // Common metadata fields
   const commonMetadata = {
@@ -34,13 +34,10 @@ export function useFilmActions({ film, isFavorite, onToggleFavorite, onBack }: F
     iso: film.iso.toString(),
     process: film.process,
     type: film.color ? "Color" : "Black & White",
-    formats: [
-      film.formatThirtyFive && "35mm",
-      film.formatOneTwenty && "120"
-    ].filter(Boolean).join(", "),
+    formats: [film.formatThirtyFive && "35mm", film.formatOneTwenty && "120"].filter(Boolean).join(", "),
     keyFeatures: film.keyFeatures,
     customDescription: film.customDescription,
-  }
+  };
 
   // Common actions
   const commonActions = {
@@ -55,14 +52,14 @@ export function useFilmActions({ film, isFavorite, onToggleFavorite, onBack }: F
       url: bhPhotoUrl,
       shortcut: { modifiers: ["cmd" as Keyboard.KeyModifier], key: "b" as Keyboard.KeyEquivalent },
     },
-  }
+  };
 
   // Development-specific actions (for B&W films)
   const developmentActions = !film.color
     ? {
         massiveDev: massiveDevChartUrl
           ? {
-              title: preferredDeveloper 
+              title: preferredDeveloper
                 ? `View Times for ${preferredDeveloper.replace(/%/g, "")}`
                 : "View Development Times",
               url: massiveDevChartUrl,
@@ -79,7 +76,7 @@ export function useFilmActions({ film, isFavorite, onToggleFavorite, onBack }: F
             }
           : null,
       }
-    : null
+    : null;
 
   return {
     urls: {
@@ -97,5 +94,5 @@ export function useFilmActions({ film, isFavorite, onToggleFavorite, onBack }: F
       tempUnit,
       preferredDeveloper,
     },
-  }
-} 
+  };
+}

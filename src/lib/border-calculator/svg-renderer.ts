@@ -1,18 +1,18 @@
-import fs from "fs"
-import path from "path"
-import { BorderCalculation, BorderTemplate } from "./types"
-import { environment } from "@raycast/api"
+import fs from "fs";
+import path from "path";
+import { BorderCalculation, BorderTemplate } from "./types";
+import { environment } from "@raycast/api";
 
 interface SvgOptions {
-  width: number
-  height: number
-  padding: number
-  backgroundColor: string
-  borderColor: string
-  printColor: string
-  textColor: string
-  infoTextColor: string
-  strokeWidth: number
+  width: number;
+  height: number;
+  padding: number;
+  backgroundColor: string;
+  borderColor: string;
+  printColor: string;
+  textColor: string;
+  infoTextColor: string;
+  strokeWidth: number;
 }
 
 const DEFAULT_OPTIONS: SvgOptions = {
@@ -24,49 +24,53 @@ const DEFAULT_OPTIONS: SvgOptions = {
   printColor: "#f8f8f8",
   textColor: "#333333",
   infoTextColor: "#FFFFFF",
-  strokeWidth: 2
-}
+  strokeWidth: 2,
+};
 
 /**
  * Generates an SVG representation of a border template calculation
  */
-export function generateSvg(calculation: BorderCalculation, template: BorderTemplate, options: Partial<SvgOptions> = {}): string {
-  const opts: SvgOptions = { ...DEFAULT_OPTIONS, ...options }
-  const { width, height, padding, backgroundColor, borderColor, printColor, textColor, strokeWidth } = opts
-  
+export function generateSvg(
+  calculation: BorderCalculation,
+  template: BorderTemplate,
+  options: Partial<SvgOptions> = {},
+): string {
+  const opts: SvgOptions = { ...DEFAULT_OPTIONS, ...options };
+  const { width, height, padding, backgroundColor, borderColor, printColor, textColor, strokeWidth } = opts;
+
   // Get easel dimensions and scale to fit within the SVG bounds
-  const easelWidth = calculation.easel.size.width
-  const easelHeight = calculation.easel.size.height
-  
+  const easelWidth = calculation.easel.size.width;
+  const easelHeight = calculation.easel.size.height;
+
   // Calculate scale factor to fit the easel within the SVG
-  const easelAspectRatio = easelWidth / easelHeight
-  const svgAspectRatio = (width - 2 * padding) / (height - 2 * padding)
-  
-  let scale: number
+  const easelAspectRatio = easelWidth / easelHeight;
+  const svgAspectRatio = (width - 2 * padding) / (height - 2 * padding);
+
+  let scale: number;
   if (easelAspectRatio > svgAspectRatio) {
     // Scale based on width
-    scale = (width - 2 * padding) / easelWidth
+    scale = (width - 2 * padding) / easelWidth;
   } else {
     // Scale based on height
-    scale = (height - 2 * padding) / easelHeight
+    scale = (height - 2 * padding) / easelHeight;
   }
-  
+
   // Calculate print area dimensions
-  const printWidth = calculation.printDimensions.width * scale
-  const printHeight = calculation.printDimensions.height * scale
-  
+  const printWidth = calculation.printDimensions.width * scale;
+  const printHeight = calculation.printDimensions.height * scale;
+
   // Determine paper dimensions after scaling
-  const paperWidth = template.paperDimensions.width * scale
-  const paperHeight = template.paperDimensions.height * scale
-  
+  const paperWidth = template.paperDimensions.width * scale;
+  const paperHeight = template.paperDimensions.height * scale;
+
   // Calculate the centered position of the paper in the SVG
-  const paperX = (width - paperWidth) / 2
-  const paperY = (height - paperHeight) / 2
-  
+  const paperX = (width - paperWidth) / 2;
+  const paperY = (height - paperHeight) / 2;
+
   // Calculate the print area position
-  const printX = paperX + (calculation.borders.left * scale)
-  const printY = paperY + (calculation.borders.top * scale)
-  
+  const printX = paperX + calculation.borders.left * scale;
+  const printY = paperY + calculation.borders.top * scale;
+
   // Generate the SVG
   const svg = `
     <svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}">
@@ -164,9 +168,9 @@ export function generateSvg(calculation: BorderCalculation, template: BorderTemp
         ${calculation.printDimensions.width.toFixed(2)}" × ${calculation.printDimensions.height.toFixed(2)}"
       </text>
     </svg>
-  `.trim()
-  
-  return svg
+  `.trim();
+
+  return svg;
 }
 
 /**
@@ -174,94 +178,85 @@ export function generateSvg(calculation: BorderCalculation, template: BorderTemp
  */
 export function svgToDataUrl(svgString: string): string {
   // Encode the SVG as a base64 data URL
-  const svgBase64 = Buffer.from(svgString).toString('base64')
-  return `data:image/svg+xml;base64,${svgBase64}`
+  const svgBase64 = Buffer.from(svgString).toString("base64");
+  return `data:image/svg+xml;base64,${svgBase64}`;
 }
 
 /**
  * Generates an image data URL for a border template
  */
-export function generateTemplateImageUrl(
-  template: BorderTemplate,
-  calculation: BorderCalculation
-): string {
+export function generateTemplateImageUrl(template: BorderTemplate, calculation: BorderCalculation): string {
   // Generate SVG
-  const svg = generateSvg(calculation, template)
-  
+  const svg = generateSvg(calculation, template);
+
   // Convert to data URL
-  return svgToDataUrl(svg)
+  return svgToDataUrl(svg);
 }
 
 /**
  * Gets the cache directory for storing template data
  */
 export function getCacheDirectory(): string {
-  const cacheDir = path.join(environment.supportPath, "border-templates")
-  
+  const cacheDir = path.join(environment.supportPath, "border-templates");
+
   // Ensure cache directory exists
   if (!fs.existsSync(cacheDir)) {
     try {
-      fs.mkdirSync(cacheDir, { recursive: true })
+      fs.mkdirSync(cacheDir, { recursive: true });
     } catch (error) {
-      console.error("Failed to create cache directory:", error)
+      console.error("Failed to create cache directory:", error);
     }
   }
-  
-  return cacheDir
+
+  return cacheDir;
 }
 
 /**
  * Gets the image cache path for a template
  */
 export function getTemplateImageCachePath(templateId: string): string {
-  return path.join(getCacheDirectory(), `${templateId}.svg`)
+  return path.join(getCacheDirectory(), `${templateId}.svg`);
 }
 
 /**
  * Checks if an image already exists in cache for a template
  */
 export function templateImageExists(templateId: string): boolean {
-  const cachePath = getTemplateImageCachePath(templateId)
-  return fs.existsSync(cachePath)
+  const cachePath = getTemplateImageCachePath(templateId);
+  return fs.existsSync(cachePath);
 }
 
 /**
  * Saves an SVG for a template to the cache
  */
-export async function saveTemplateImage(
-  template: BorderTemplate,
-  calculation: BorderCalculation
-): Promise<string> {
+export async function saveTemplateImage(template: BorderTemplate, calculation: BorderCalculation): Promise<string> {
   // Always generate a fresh SVG when saving to ensure it reflects the current state
-  const svg = generateSvg(calculation, template)
-  const cachePath = getTemplateImageCachePath(template.id)
-  
+  const svg = generateSvg(calculation, template);
+  const cachePath = getTemplateImageCachePath(template.id);
+
   try {
     // Ensure cache directory exists
-    const cacheDir = getCacheDirectory()
+    const cacheDir = getCacheDirectory();
     if (!fs.existsSync(cacheDir)) {
-      fs.mkdirSync(cacheDir, { recursive: true })
+      fs.mkdirSync(cacheDir, { recursive: true });
     }
-    
+
     // Write SVG to file
-    fs.writeFileSync(cachePath, svg)
-    return svgToDataUrl(svg)
+    fs.writeFileSync(cachePath, svg);
+    return svgToDataUrl(svg);
   } catch (error) {
-    console.error(`Failed to save template image for "${template.name}":`, error)
+    console.error(`Failed to save template image for "${template.name}":`, error);
     // Return data URL even if we failed to save to cache
-    return svgToDataUrl(svg)
+    return svgToDataUrl(svg);
   }
 }
 
 /**
  * Gets the SVG data from cache or generates it
  */
-export async function getTemplateImage(
-  template: BorderTemplate,
-  calculation: BorderCalculation
-): Promise<string> {
+export async function getTemplateImage(template: BorderTemplate, calculation: BorderCalculation): Promise<string> {
   // Always generate a fresh image to properly handle orientation changes
-  return saveTemplateImage(template, calculation)
+  return saveTemplateImage(template, calculation);
 }
 
 /**
@@ -269,14 +264,14 @@ export async function getTemplateImage(
  */
 export function deleteTemplateImage(templateId: string): boolean {
   try {
-    const cachePath = getTemplateImageCachePath(templateId)
+    const cachePath = getTemplateImageCachePath(templateId);
     if (fs.existsSync(cachePath)) {
-      fs.unlinkSync(cachePath)
-      return true
+      fs.unlinkSync(cachePath);
+      return true;
     }
-    return false
+    return false;
   } catch (error) {
-    console.error(`Failed to delete template image for ID ${templateId}:`, error)
-    return false
+    console.error(`Failed to delete template image for ID ${templateId}:`, error);
+    return false;
   }
-} 
+}

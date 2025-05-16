@@ -7,11 +7,11 @@ const FILMDEV_API_BASE = "https://filmdev.org/api/recipe";
 
 // Helper function to convert between C and F
 function celsiusToFahrenheit(celsius: number): number {
-  return (celsius * 9/5) + 32;
+  return (celsius * 9) / 5 + 32;
 }
 
 function fahrenheitToCelsius(fahrenheit: number): number {
-  return (fahrenheit - 32) * 5/9;
+  return ((fahrenheit - 32) * 5) / 9;
 }
 
 // Helper function to extract ISO from film name
@@ -23,10 +23,7 @@ function extractISOFromFilm(filmName: string): number {
 // Helper function to convert filmdev.org recipe to our format
 function convertFilmDevRecipe(recipe: FilmDevRecipe): Recipe {
   // Calculate total duration in seconds
-  const totalDuration = 
-    recipe.duration_hours * 3600 + 
-    recipe.duration_minutes * 60 + 
-    recipe.duration_seconds;
+  const totalDuration = recipe.duration_hours * 3600 + recipe.duration_minutes * 60 + recipe.duration_seconds;
 
   // Extract temperatures
   const temperatureC = parseFloat(recipe.celcius);
@@ -99,7 +96,7 @@ export async function importFilmDevRecipe(recipeId: string): Promise<Recipe> {
     const response = await got(`${FILMDEV_API_BASE}/${recipeId}`);
     const { recipe } = JSON.parse(response.body) as FilmDevResponse;
     const convertedRecipe = convertFilmDevRecipe(recipe);
-    
+
     await saveRecipe(convertedRecipe);
     return convertedRecipe;
   } catch (error) {
@@ -111,7 +108,8 @@ export async function importFilmDevRecipe(recipeId: string): Promise<Recipe> {
 export function searchRecipes(recipes: Recipe[], query: string): Recipe[] {
   const searchTerms = query.toLowerCase().split(" ");
   return recipes.filter((recipe) => {
-    const searchableText = `${recipe.filmName} ${recipe.developerName} ${recipe.dilution} ${recipe.notes || ""}`.toLowerCase();
+    const searchableText =
+      `${recipe.filmName} ${recipe.developerName} ${recipe.dilution} ${recipe.notes || ""}`.toLowerCase();
     return searchTerms.every((term) => searchableText.includes(term));
   });
-} 
+}

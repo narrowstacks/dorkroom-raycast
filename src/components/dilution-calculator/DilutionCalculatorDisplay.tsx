@@ -16,7 +16,7 @@ export function CalculatorDisplay({ input, result, onSave, onQuickSave, onCopy }
       subtitle={`${input} - ${result.amount}ml total`}
       actions={
         <ActionPanel>
-          {onSave && <Action title="Save With Name" icon={Icon.SaveDocument} onAction={onSave} />}
+          {onSave && <Action title="Save with Name" icon={Icon.SaveDocument} onAction={onSave} />}
           {onQuickSave && <Action title="Quick Save" icon={Icon.SaveDocument} onAction={onQuickSave} />}
           {onCopy && (
             <Action.CopyToClipboard

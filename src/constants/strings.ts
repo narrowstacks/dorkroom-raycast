@@ -36,7 +36,7 @@ export const FILM_STRINGS = {
     COLOR: "Color",
     BW: "B&W",
   },
-}
+};
 
 export const RECIPE_STRINGS = {
   COMMON: {
@@ -99,7 +99,7 @@ export const RECIPE_STRINGS = {
     CUSTOM: {
       FILM: "Custom Film",
       DEVELOPER: "Custom Developer",
-      DILUTION: "Custom Dilution"
+      DILUTION: "Custom Dilution",
     },
     TEMPERATURE_UNIT: {
       C: "°C",
@@ -155,7 +155,7 @@ export const DILUTION_CALCULATOR_STRINGS = {
     CURRENT_CALCULATION: "Current Calculation",
     SAVED_CALCULATIONS: "Saved Calculations",
     SAVED_COUNT: (count: number) => `${count} saved`,
-    MANUFACTURER_COMMON: "Manufacturer/Common Dilutions"
+    MANUFACTURER_COMMON: "Manufacturer/Common Dilutions",
   },
   ACTIONS: {
     CALCULATE: "Calculate",
@@ -166,10 +166,10 @@ export const DILUTION_CALCULATOR_STRINGS = {
     REMOVE_PREFERRED_DEVELOPER: "Remove as Preferred Developer",
     PREFERRED_TAG: "Preferred",
     EDIT: "Edit",
-    DELETE: "Delete"
+    DELETE: "Delete",
   },
   SEARCH: {
-    PLACEHOLDER: "Search developers or enter ratio (e.g., 'HC-110', 'Dilution B', '1+31', '31 500')"
+    PLACEHOLDER: "Search developers or enter ratio (e.g., 'HC-110', 'Dilution B', '1+31', '31 500')",
   },
   FORM: {
     FIELDS: {
@@ -179,7 +179,7 @@ export const DILUTION_CALCULATOR_STRINGS = {
       NAME: "Name",
       FIRST_CHEMICAL: "First Chemical Name (optional)",
       SECOND_CHEMICAL: "Second Chemical Name (optional)",
-      ICON: "Icon (optional)"
+      ICON: "Icon (optional)",
     },
     PLACEHOLDERS: {
       RATIO: "e.g., 1+31 or 1:1:100",
@@ -187,25 +187,25 @@ export const DILUTION_CALCULATOR_STRINGS = {
       SAVE_AS: "e.g., DD-X 1+31 or Pyro 1:1:100",
       ICON: "Enter a Raycast icon name or emoji",
       FIRST_CHEMICAL: "e.g., Developer",
-      SECOND_CHEMICAL: "e.g., Activator"
+      SECOND_CHEMICAL: "e.g., Activator",
     },
     DESCRIPTIONS: {
       ICON: "You can use Raycast icons (e.g., 'beaker') or system emojis (e.g., '🧪')",
-      CURRENT_DILUTION: "Current Dilution"
+      CURRENT_DILUTION: "Current Dilution",
     },
     ACTIONS: {
       CALCULATE: "Calculate",
-      SAVE: "Save Changes"
+      SAVE: "Save Changes",
     },
     VALIDATION: {
       INVALID_AMOUNT: {
         TITLE: "Invalid amount",
-        MESSAGE: "Please enter a valid number for the amount"
+        MESSAGE: "Please enter a valid number for the amount",
       },
       INVALID_RATIO: {
         TITLE: "Invalid ratio format",
-        MESSAGE: "Please use format like '1+31' or '1:1:100'"
-      }
-    }
-  }
-} 
+        MESSAGE: "Please use format like '1+31' or '1:1:100'",
+      },
+    },
+  },
+};

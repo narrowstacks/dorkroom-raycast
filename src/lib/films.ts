@@ -84,4 +84,4 @@ export function filterFilms(films: Film[], searchText: string): Film[] {
       film.process.toLowerCase().includes(searchText.toLowerCase()) ||
       (film.color ? "color" : "black and white").includes(searchText.toLowerCase()),
   );
-} 
+}
