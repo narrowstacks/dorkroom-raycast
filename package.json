@@ -36,7 +36,7 @@
       "subtitle": "Search for film types",
       "description": "Find and view types of films from various brands.",
       "mode": "view",
-      "icon": "film-icon.png"
+      "icon": "film_icon.png"
     },
     {
       "name": "dilution-calculator",
@@ -44,7 +44,7 @@
       "subtitle": "Calculate a chemical mixture dilution",
       "description": "Calculate a chemical mixture dilution in ml or fl oz",
       "mode": "view",
-      "icon": "dilution-icon.png",
+      "icon": "dilution_icon.png",
       "preferences": [
         {
           "name": "volumeUnit",
@@ -90,14 +90,15 @@
       "subtitle": "Create and view B&W film development recipes",
       "description": "Save and organize your film development recipes, with support for importing from FilmDev.org",
       "mode": "view",
-      "icon": "recipe-icon.png"
+      "icon": "recipe_icon.png"
     },
     {
       "name": "easel-calculator",
       "title": "Easel Calculator",
       "subtitle": "Calculate accurate easel borders",
       "description": "Calculate accurate darkroom easel borders with centering, offsets, and paper size compensation",
-      "mode": "view"
+      "mode": "view",
+      "icon": "easel_icon.png"
     }
   ],
   "dependencies": {
